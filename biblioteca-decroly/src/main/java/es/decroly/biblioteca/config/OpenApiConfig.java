@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(
-                                title = "Tienda Decroly",
+                                title = "Biblioteca Decroly",
                                 version = "1.0.0",
-                                description = "API para gestionar productos"))
+                                description = "API para gestionar categorías y libros"))
 public class OpenApiConfig {
 
 }
