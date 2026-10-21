@@ -5,7 +5,7 @@ import es.decroly.biblioteca.domain.Libro;
 import java.util.List;
 
 public interface LibroService {
-    List<Libro> listarProductos();
+    List<Libro> listarLibros();
 
     Libro buscarPorId(Long id);
 

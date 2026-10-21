@@ -29,7 +29,7 @@ public class LibroServiceBase implements LibroService {
     }
 
     @Override
-    public List<Libro> listarProductos() {
+    public List<Libro> listarLibros() {
         return libros;
     }
 
@@ -44,11 +44,30 @@ public class LibroServiceBase implements LibroService {
     @Override
     public Libro crear(Libro libro) {
         Long nId = secuencia.incrementAndGet();
-        boolean add = libros.add(new Libro(nId, libro.getTitulo(), libro.getIsbn(), libro.getAutor(), libro.getAnioPublicacion()));
+        Libro l = new Libro(nId, libro.getTitulo(), libro.getIsbn(), libro.getAutor(), libro.getAnioPublicacion());
+        libros.add(l);
 
         System.out.println("Los ejemplares y disponibles se inicializaron a 1, y sin categoría\n");
-        return add ? libro : null;
+        return l;
     }
+
+//    //Función añadir un libro
+//    public void add(String isbn, String titulo, String autor, String fechaPublicacion, String categoria) {
+//        Long nuevoId = secuencia.incrementAndGet();
+//
+//        Long categoriaId = null;
+//        AtomicReference<Long> n = new AtomicReference<>();
+//
+//
+//        categoriaService.listarCategorias().forEach((c) -> {
+//            if(c != null && c.getNombre().equals(categoria)){
+//                n.set(c.getId());
+//            }
+//        });
+//
+//        categoriaId = n.get();
+//        libros.add(new Libro(nuevoId, isbn, titulo, autor, fechaPublicacion, categoriaId));
+//    }
 
     @Override
     public Libro modificar(Long id, Libro libro) {
