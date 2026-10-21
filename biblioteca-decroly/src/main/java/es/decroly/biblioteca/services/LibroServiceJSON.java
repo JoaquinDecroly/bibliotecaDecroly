@@ -1,6 +1,5 @@
 package es.decroly.biblioteca.services;
 
-import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.domain.Libro;
 import org.springframework.core.io.ClassPathResource;
 import tools.jackson.databind.ObjectMapper;

@@ -12,7 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
 @Service
-public class LibroServiceMemoria implements LibroService extends LibroServiceBase {
+public class LibroServiceMemoria extends LibroServiceBase {
+//    public class LibroServiceMemoria implements LibroService extends LibroServiceBase
     public LibroServiceMemoria() {
         super(List.of(
                 new Libro(1L, "Clean Code", "9780132350884", "Robert C. Martin", "2008"),
