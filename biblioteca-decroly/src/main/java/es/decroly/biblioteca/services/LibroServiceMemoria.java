@@ -1,62 +1,60 @@
 package es.decroly.biblioteca.services;
 
-import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.exceptions.BadRequestException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.regex.Pattern;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class LibroServiceMemoria extends LibroServiceBase {
 //    public class LibroServiceMemoria implements LibroService extends LibroServiceBase
-    public LibroServiceMemoria() {
-        super(List.of(
-                new Libro(1L, "Clean Code", "9780132350884", "Robert C. Martin", "2008"),
-                new Libro(2L, "El Principito", "9780156013925", "Antoine de Saint-Exupéry", "1943"),
-                new Libro(3L, "Sapiens", "9780062316097", "Yuval Noah Harari", "2011"),
-                new Libro(4L, "Breve historia del tiempo", "9780553380163", "Stephen Hawking", "1988"),
-                new Libro(5L, "Los pilares de la Tierra", "9780451237806", "Ken Follett", "1989"),
-                new Libro(6L, "El Hobbit", "9780547928227", "J.R.R. Tolkien", "1937"),
-                new Libro(7L, "El código Da Vinci", "9780307474278", "Dan Brown", "2003"),
-                new Libro(8L, "Orgullo y Prejuicio", "9780141439518", "Jane Austen", "1813"),
-                new Libro(9L, "El resplandor", "9780307743657", "Stephen King", "1977"),
-                new Libro(10L, "La isla del tesoro", "9780141324841", "Robert Louis Stevenson", "1883"),
-                new Libro(11L, "Steve Jobs", "9781451648539", "Walter Isaacson", "2011"),
-                new Libro(12L, "El poder del ahora", "9781577314806", "Eckhart Tolle", "1997"),
-                new Libro(13L, "Así habló Zaratustra", "9780140441185", "Friedrich Nietzsche", "1883"),
-                new Libro(14L, "El hombre en busca de sentido", "9780807014295", "Viktor Frankl", "1946"),
-                new Libro(15L, "Pedagogía del oprimido", "9780140254037", "Paulo Freire", "1970"),
-                new Libro(16L, "Cien años de soledad", "9780060883287", "Gabriel García Márquez", "1967"),
-                new Libro(17L, "Veinte poemas de amor", "9780140187651", "Pablo Neruda", "1924"),
-                new Libro(18L, "Dune", "9780441172719", "Frank Herbert", "1965"),
-                new Libro(19L, "El pequeño príncipe", "9780156013925", "Antoine de Saint-Exupéry", "1943"),
-                new Libro(20L, "Los juegos del hambre", "9780439023528", "Suzanne Collins", "2008"),
-                new Libro(21L, "El rico padre el padre pobre", "9781612680194", "Robert Kiyosaki", "1997"),
-                new Libro(22L, "Influencia", "9780061241895", "Robert Cialdini", "1984"),
-                new Libro(23L, "Design Patterns", "9780201633610", "Erich Gamma", "1994"),
-                new Libro(24L, "Superinteligencia", "9780198739838", "Nick Bostrom", "2014"),
-                new Libro(25L, "El diseño de cosas", "9780465067107", "Don Norman", "1988"),
-                new Libro(26L, "La cocina de mamá", "9788498016880", "Karlos Arguiñano", "1995"),
-                new Libro(27L, "En la ruta de Marco Polo", "9788498726752", "Javier Reverte", "2001"),
-                new Libro(28L, "Cómo no morir", "9781250066554", "Michael Greger", "2015"),
-                new Libro(29L, "Bounce", "9780061723759", "Matthew Syed", "2010"),
-                new Libro(30L, "Las religiones del mundo", "9780131535060", "Huston Smith", "1958"),
-                new Libro(31L, "El príncipe", "9780140449150", "Niccolò Machiavelli", "1532"),
-                new Libro(32L, "El espíritu de las leyes", "9780140444285", "Montesquieu", "1748"),
-                new Libro(33L, "Arquitectura moderna", "9780500203964", "William Curtis", "1982"),
-                new Libro(34L, "Historia del arte", "9780500203964", "E.H. Gombrich", "1950"),
-                new Libro(35L, "Teoría musical", "9780131893638", "Benjamin Horvit", "1960"),
-                new Libro(36L, "Maus", "9780679729778", "Art Spiegelman", "1986"),
-                new Libro(37L, "Ensayos", "9780140449043", "Michel de Montaigne", "1580"),
-                new Libro(38L, "El silencio de los inocentes", "9780345354901", "Thomas Harris", "1988"),
-                new Libro(39L, "Mitología griega", "9780316341516", "Edith Hamilton", "1942"),
-                new Libro(40L, "La sexta extinción", "9780805092998", "Elizabeth Kolbert", "2014")
-        ));
+public LibroServiceMemoria() {
+    super(List.of(
+            new Libro(1L, "9780132350884", "Clean Code", "Robert C. Martin", "2008", 23L),
+            new Libro(2L, "9780156013925", "El Principito", "Antoine de Saint-Exupéry", "1943", 19L),
+            new Libro(3L, "9780062316097", "Sapiens", "Yuval Noah Harari", "2011", 5L),
+            new Libro(4L, "9780553380163", "Breve historia del tiempo", "Stephen Hawking", "1988", 4L),
+            new Libro(5L, "9780451237806", "Los pilares de la Tierra", "Ken Follett", "1989", 16L),
+            new Libro(6L, "9780547928227", "El Hobbit", "J.R.R. Tolkien", "1937", 6L),
+            new Libro(7L, "9780307474278", "El código Da Vinci", "Dan Brown", "2003", 7L),
+            new Libro(8L, "9780141439518", "Orgullo y Prejuicio", "Jane Austen", "1813", 8L),
+            new Libro(9L, "9780307743657", "El resplandor", "Stephen King", "1977", 9L),
+            new Libro(10L, "9780141324841", "La isla del tesoro", "Robert Louis Stevenson", "1883", 10L),
+            new Libro(11L, "9781451648539", "Steve Jobs", "Walter Isaacson", "2011", 11L),
+            new Libro(12L, "9781577314806", "El poder del ahora", "Eckhart Tolle", "1997", 12L),
+            new Libro(13L, "9780140441185", "Así habló Zaratustra", "Friedrich Nietzsche", "1883", 13L),
+            new Libro(14L, "9780807014295", "El hombre en busca de sentido", "Viktor Frankl", "1946", 14L),
+            new Libro(15L, "9780140254037", "Pedagogía del oprimido", "Paulo Freire", "1970", 15L),
+            new Libro(16L, "9780060883287", "Cien años de soledad", "Gabriel García Márquez", "1967", 16L),
+            new Libro(17L, "9780140187651", "Veinte poemas de amor", "Pablo Neruda", "1924", 17L),
+            new Libro(18L, "9780441172719", "Dune", "Frank Herbert", "1965", 18L),
+            new Libro(19L, "9780156013925", "El pequeño príncipe", "Antoine de Saint-Exupéry", "1943", 19L),
+            new Libro(20L, "9780439023528", "Los juegos del hambre", "Suzanne Collins", "2008", 20L),
+            new Libro(21L, "9781612680194", "El rico padre el padre pobre", "Robert Kiyosaki", "1997", 21L),
+            new Libro(22L, "9780061241895", "Influencia", "Robert Cialdini", "1984", 22L),
+            new Libro(23L, "9780201633610", "Design Patterns", "Erich Gamma", "1994", 23L),
+            new Libro(24L, "9780198739838", "Superinteligencia", "Nick Bostrom", "2014", 24L),
+            new Libro(25L, "9780465067107", "El diseño de cosas", "Don Norman", "1988", 25L),
+            new Libro(26L, "9788498016880", "La cocina de mamá", "Karlos Arguiñano", "1995", 26L),
+            new Libro(27L, "9788498726752", "En la ruta de Marco Polo", "Javier Reverte", "2001", 27L),
+            new Libro(28L, "9781250066554", "Cómo no morir", "Michael Greger", "2015", 28L),
+            new Libro(29L, "9780061723759", "Bounce", "Matthew Syed", "2010", 29L),
+            new Libro(30L, "9780131535060", "Las religiones del mundo", "Huston Smith", "1958", 30L),
+            new Libro(31L, "9780140449150", "El príncipe", "Niccolò Machiavelli", "1532", 31L),
+            new Libro(32L, "9780140444285", "El espíritu de las leyes", "Montesquieu", "1748", 31L),
+            new Libro(33L, "9780500203964", "Arquitectura moderna", "William Curtis", "1982", 33L),
+            new Libro(34L, "9780500203964", "Historia del arte", "E.H. Gombrich", "1950", 34L),
+            new Libro(35L, "9780131893638", "Teoría musical", "Benjamin Horvit", "1960", 35L),
+            new Libro(36L, "9780679729778", "Maus", "Art Spiegelman", "1986", 36L),
+            new Libro(37L, "9780140449043", "Ensayos", "Michel de Montaigne", "1580", 37L),
+            new Libro(38L, "9780345354901", "El silencio de los inocentes", "Thomas Harris", "1988", 38L),
+            new Libro(39L, "9780316341516", "Mitología griega", "Edith Hamilton", "1942", 39L),
+            new Libro(40L, "9780805092998", "La sexta extinción", "Elizabeth Kolbert", "2014", 40L)
+    ));
+}
     //    private static final Pattern ISBN_PATTERN = Pattern.compile("[0-9]{13}");
 //
 //    private final List<Libro> libros = new ArrayList<>();
@@ -145,4 +143,3 @@ public class LibroServiceMemoria extends LibroServiceBase {
 //        );
 //    }
     }
-}

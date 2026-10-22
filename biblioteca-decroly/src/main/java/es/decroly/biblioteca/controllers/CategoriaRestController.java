@@ -30,6 +30,9 @@ public class CategoriaRestController {
     ///////////////////////////////////////////////////////////////
 
     //Listar todos las categorias
+    @Operation(summary = "Listar todas las categorías")
+    @ApiResponse(responseCode = "200", description = "Esta es la colección de categorías")
+    @ApiResponse(responseCode = "404", description = "No hay colección de categorías")
     @GetMapping
     public List<Categoria> listarCategorias() {
         return categoriaService.listarCategorias();
@@ -45,18 +48,27 @@ public class CategoriaRestController {
     }
 
     //Añade una categoria
+    @Operation(summary = "Añadir una categoría")
+    @ApiResponse(responseCode = "200", description = "Categoría añadida exitosamente")
+    @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir la categoría")
     @PostMapping
     public Categoria add(@RequestBody Categoria c) {
         return categoriaService.crear(new Categoria(c.getNombre(), c.getDescripcion()));
     }
 
     //Modificar una categoria por id
+    @Operation(summary = "Modificar una categoría por id")
+    @ApiResponse(responseCode = "200", description = "Categoría encontrada y modificada exitosamente")
+    @ApiResponse(responseCode = "404", description = "Categoría no encontrada, y por ende, no modificada")
     @PutMapping("/{id}")
     public Categoria modProd(@PathVariable Long id, @RequestBody Categoria c) {
         return categoriaService.modificar(id, c);
     }
 
     //Eliminar una categoria por id
+    @Operation(summary = "Borrar una categoría por id")
+    @ApiResponse(responseCode = "200", description = "Categoría encontrada y suprimida")
+    @ApiResponse(responseCode = "404", description = "Categoría no encontrada, y por ende, no suprimida")
     @DeleteMapping("/{id}")
     public void remove(@PathVariable Long id) {
         categoriaService.eliminar(id);

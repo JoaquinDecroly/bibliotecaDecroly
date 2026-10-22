@@ -9,6 +9,12 @@ public interface LibroService {
 
     Libro buscarPorId(Long id);
 
+    List<Libro> listarLibrosDisponibles();
+
+    List<Libro> obtenerLibrosDeCategoria(Long id);
+
+    List<Libro> listarLibrosDeAutor(String autor);
+
     Libro crear(Libro libro);
 
     Libro modificar(Long id, Libro libro);

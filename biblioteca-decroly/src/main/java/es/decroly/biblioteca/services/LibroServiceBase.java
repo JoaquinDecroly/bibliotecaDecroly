@@ -42,9 +42,46 @@ public class LibroServiceBase implements LibroService {
     }
 
     @Override
+    public List<Libro> listarLibrosDisponibles() {
+        List<Libro> librosDisponibles = new ArrayList<>();
+
+        listarLibros().forEach(l -> {
+            if(l.getDisponibles() > 0){
+                librosDisponibles.add(l);
+            }
+        });
+        return librosDisponibles;
+    }
+
+    @Override
+    public List<Libro> obtenerLibrosDeCategoria(Long id) {
+        List<Libro> librosDeCategoria = new ArrayList<>();
+
+        listarLibros().forEach(l -> {
+            if(l.getCategoriaId().equals(id)){
+                librosDeCategoria.add(l);
+            }
+        });
+        return librosDeCategoria;
+    }
+
+    @Override
+    public List<Libro> listarLibrosDeAutor(String autor) {
+        List<Libro> librosDeAutor = new ArrayList<>();
+
+        listarLibros().forEach(l -> {
+            if(l.getAutor().equalsIgnoreCase(autor)){
+                librosDeAutor.add(l);
+            }
+        });
+        return librosDeAutor;
+    }
+
+    @Override
     public Libro crear(Libro libro) {
         Long nId = secuencia.incrementAndGet();
-        Libro l = new Libro(nId, libro.getTitulo(), libro.getIsbn(), libro.getAutor(), libro.getAnioPublicacion());
+        Libro l = new Libro(nId, libro.getIsbn(), libro.getTitulo(), libro.getAutor(),
+                libro.getAnioPublicacion(), libro.getCategoriaId());
         libros.add(l);
 
         System.out.println("Los ejemplares y disponibles se inicializaron a 1, y sin categoría\n");
