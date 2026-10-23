@@ -1,6 +1,8 @@
 package es.decroly.biblioteca.services;
 
 import es.decroly.biblioteca.domain.Libro;
+import es.decroly.biblioteca.dto.LibroPeticionDto;
+import es.decroly.biblioteca.exceptions.BadRequestException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
 
 import java.util.ArrayList;
@@ -78,7 +80,8 @@ public class LibroServiceBase implements LibroService {
     }
 
     @Override
-    public Libro crear(Libro libro) {
+    public Libro crear(LibroPeticionDto libro) {
+        validar(libro);
         Long nId = secuencia.incrementAndGet();
         Libro l = new Libro(nId, libro.getIsbn(), libro.getTitulo(), libro.getAutor(),
                 libro.getAnioPublicacion(), libro.getCategoriaId());
@@ -87,6 +90,31 @@ public class LibroServiceBase implements LibroService {
         System.out.println("Los ejemplares y disponibles se inicializaron a 1, y sin categoría\n");
         return l;
     }
+
+    @Override
+    public Libro modificar(Long id, LibroPeticionDto libro) {
+        validar(libro);
+        Libro libroMod = buscarPorId(id);
+        libroMod.setIsbn(libro.getIsbn());
+        libroMod.setTitulo(libro.getTitulo());
+        libroMod.setAutor(libro.getAutor());
+        libroMod.setAnioPublicacion(libro.getAnioPublicacion());
+        libroMod.setEjemplares(libro.getEjemplares());
+        libroMod.setCategoriaId(libro.getCategoriaId());
+
+        return libroMod;
+    }
+
+//    @Override
+//    public Libro crear(Libro libro) {
+//        Long nId = secuencia.incrementAndGet();
+//        Libro l = new Libro(nId, libro.getIsbn(), libro.getTitulo(), libro.getAutor(),
+//                libro.getAnioPublicacion(), libro.getCategoriaId());
+//        libros.add(l);
+//
+//        System.out.println("Los ejemplares y disponibles se inicializaron a 1, y sin categoría\n");
+//        return l;
+//    }
 
 //    //Función añadir un libro
 //    public void add(String isbn, String titulo, String autor, String fechaPublicacion, String categoria) {
@@ -106,28 +134,44 @@ public class LibroServiceBase implements LibroService {
 //        libros.add(new Libro(nuevoId, isbn, titulo, autor, fechaPublicacion, categoriaId));
 //    }
 
-    @Override
-    public Libro modificar(Long id, Libro libro) {
-        Libro libroMod = buscarPorId(id);
-        libroMod.setId(libro.getId());
-        libroMod.setIsbn(libro.getIsbn());
-        libroMod.setTitulo(libro.getTitulo());
-        libroMod.setAutor(libro.getAutor());
-        libroMod.setAnioPublicacion(libro.getAnioPublicacion());
-        libroMod.setEjemplares(libro.getEjemplares());
-        libroMod.setDisponibles(libro.getDisponibles());
-        libroMod.setCategoriaId(libro.getCategoriaId());
-
-        return libroMod;
-    }
+//    @Override
+//    public Libro modificar(Long id, Libro libro) {
+//        Libro libroMod = buscarPorId(id);
+//        libroMod.setId(libro.getId());
+//        libroMod.setIsbn(libro.getIsbn());
+//        libroMod.setTitulo(libro.getTitulo());
+//        libroMod.setAutor(libro.getAutor());
+//        libroMod.setAnioPublicacion(libro.getAnioPublicacion());
+//        libroMod.setEjemplares(libro.getEjemplares());
+//        libroMod.setDisponibles(libro.getDisponibles());
+//        libroMod.setCategoriaId(libro.getCategoriaId());
+//
+//        return libroMod;
+//    }
 
     @Override
     public void eliminar(Long id) {
         boolean remove = libros.removeIf(l -> l.getId().equals(id));
-
         if (!remove) {
-            throw new NotFoundException("No se encontró el producto con id: " + id);
+            throw new NotFoundException("No se encontró el libro con id: " + id);
         }
-        throw new NotFoundException("Se encontró y se borró exitosamente el producto con id: " + id);
+    }
+
+    private void validar(LibroPeticionDto dto) {
+        if (dto == null) {
+            throw new BadRequestException("El libro es obligatorio");
+        }
+        if (dto.getIsbn() == null || dto.getIsbn().isBlank()) {
+            throw new BadRequestException("El ISBN es obligatorio");
+        }
+        if (dto.getTitulo() == null || dto.getTitulo().isBlank()) {
+            throw new BadRequestException("El título es obligatorio");
+        }
+        if (dto.getAutor() == null || dto.getAutor().isBlank()) {
+            throw new BadRequestException("El autor es obligatorio");
+        }
+        if (dto.getEjemplares() < 1) {
+            throw new BadRequestException("Debe haber al menos un ejemplar");
+        }
     }
 }

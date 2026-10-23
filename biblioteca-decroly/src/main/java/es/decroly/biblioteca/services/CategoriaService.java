@@ -1,6 +1,7 @@
 package es.decroly.biblioteca.services;
 
 import es.decroly.biblioteca.domain.Categoria;
+import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 
 import java.util.List;
 
@@ -9,9 +10,9 @@ public interface CategoriaService {
 
     Categoria buscarPorId(Long id);
 
-    Categoria crear(Categoria categoria);
+    Categoria crear(CategoriaPeticionDto categoria);
 
-    Categoria modificar(Long id, Categoria categoria);
+    Categoria modificar(Long id, CategoriaPeticionDto categoria);
 
     void eliminar(Long id);
 }

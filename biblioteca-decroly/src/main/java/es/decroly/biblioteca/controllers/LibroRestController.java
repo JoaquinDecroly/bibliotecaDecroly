@@ -3,6 +3,7 @@ package es.decroly.biblioteca.controllers;
 
 import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.domain.Libro;
+import es.decroly.biblioteca.dto.LibroPeticionDto;
 import es.decroly.biblioteca.services.CategoriaService;
 import es.decroly.biblioteca.services.LibroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,9 +88,8 @@ public class LibroRestController {
     @ApiResponse(responseCode = "200", description = "Libro añadido exitosamente")
     @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir este libro")
     @PostMapping
-    public Libro add(@RequestBody Libro l) {
-        return libroService.crear(new Libro(
-                l.getIsbn(), l.getTitulo(), l.getAutor(), l.getAnioPublicacion(), l.getCategoriaId()));
+    public Libro add(@RequestBody LibroPeticionDto dto) {
+        return libroService.crear(dto);
     }
 
 
@@ -98,8 +98,8 @@ public class LibroRestController {
     @ApiResponse(responseCode = "200", description = "Libro encontrado y modificado exitosamente")
     @ApiResponse(responseCode = "404", description = "Libro no modificada, posiblemente se deba a que no existe")
     @PutMapping("/{id}")
-    public Libro modProd(@PathVariable Long id, @RequestBody Libro l) {
-        return libroService.modificar(id, l);
+    public Libro modProd(@PathVariable Long id, @RequestBody LibroPeticionDto dto) {
+        return libroService.modificar(id, dto);
     }
 
 

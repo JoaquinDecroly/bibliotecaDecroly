@@ -1,6 +1,7 @@
 package es.decroly.biblioteca.services;
 
 import es.decroly.biblioteca.domain.Libro;
+import es.decroly.biblioteca.dto.LibroPeticionDto;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ public interface LibroService {
 
     List<Libro> listarLibrosDeAutor(String autor);
 
-    Libro crear(Libro libro);
+    Libro crear(LibroPeticionDto libro);
 
-    Libro modificar(Long id, Libro libro);
+    Libro modificar(Long id, LibroPeticionDto libro);
 
     void eliminar(Long id);
 

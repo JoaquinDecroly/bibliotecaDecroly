@@ -1,6 +1,7 @@
 package es.decroly.biblioteca.controllers;
 
 import es.decroly.biblioteca.domain.Categoria;
+import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 import es.decroly.biblioteca.exceptions.NotFoundException;
 import es.decroly.biblioteca.services.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,8 +53,8 @@ public class CategoriaRestController {
     @ApiResponse(responseCode = "200", description = "Categoría añadida exitosamente")
     @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir la categoría")
     @PostMapping
-    public Categoria add(@RequestBody Categoria c) {
-        return categoriaService.crear(new Categoria(c.getNombre(), c.getDescripcion()));
+    public Categoria add(@RequestBody CategoriaPeticionDto dto) {
+        return categoriaService.crear(dto);
     }
 
     //Modificar una categoria por id
@@ -61,8 +62,8 @@ public class CategoriaRestController {
     @ApiResponse(responseCode = "200", description = "Categoría encontrada y modificada exitosamente")
     @ApiResponse(responseCode = "404", description = "Categoría no encontrada, y por ende, no modificada")
     @PutMapping("/{id}")
-    public Categoria modProd(@PathVariable Long id, @RequestBody Categoria c) {
-        return categoriaService.modificar(id, c);
+    public Categoria modProd(@PathVariable Long id, @RequestBody CategoriaPeticionDto dto) {
+        return categoriaService.modificar(id, dto);
     }
 
     //Eliminar una categoria por id

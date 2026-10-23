@@ -1,8 +1,11 @@
 package es.decroly.biblioteca.services;
 
 import es.decroly.biblioteca.domain.Categoria;
+import es.decroly.biblioteca.dto.CategoriaPeticionDto;
+import es.decroly.biblioteca.exceptions.BadRequestException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -11,7 +14,7 @@ public class CategoriaServiceBase implements CategoriaService{
     private final AtomicLong secuencia;
 
     public CategoriaServiceBase(List<Categoria> categoriasInd){
-        this.categorias = categoriasInd;
+        this.categorias = new ArrayList<>(categoriasInd);
         long maxId = 0;
 
         for(Categoria c : categoriasInd){
@@ -38,29 +41,39 @@ public class CategoriaServiceBase implements CategoriaService{
     }
 
     @Override
-    public Categoria crear(Categoria categoria) {
+    public Categoria crear(CategoriaPeticionDto categoria) {
+        validar(categoria);
         Long nId = secuencia.incrementAndGet();
-        boolean add = categorias.add(new Categoria(nId, categoria.getNombre(), categoria.getDescripcion()));
-
-        return add ? categoria : null;
+        Categoria nueva = new Categoria(nId, categoria.getNombre(), categoria.getDescripcion());
+        categorias.add(nueva);
+        return nueva;
     }
 
     @Override
-    public Categoria modificar(Long id, Categoria categoria) {
+    public Categoria modificar(Long id, CategoriaPeticionDto categoria) {
+        validar(categoria);
         Categoria categoriaMod = buscarPorId(id);
         categoriaMod.setNombre(categoria.getNombre());
         categoriaMod.setDescripcion(categoria.getDescripcion());
-
         return categoriaMod;
     }
 
     @Override
     public void eliminar(Long id) {
         boolean remove = categorias.removeIf(categoria -> categoria.getId().equals(id));
-
         if (!remove) {
-            throw new NotFoundException("No se encontró el producto con id: " + id);
+            throw new NotFoundException("No se encontró la categoría con id: " + id);
         }
-        throw new NotFoundException("Se encontró y se borró exitosamente el producto con id: " + id);
+    }
+    
+////////////////////////////////////////////
+
+    private void validar(CategoriaPeticionDto dto) {
+        if (dto == null) {
+            throw new BadRequestException("La categoría es obligatoria");
+        }
+        if (dto.getNombre() == null || dto.getNombre().isBlank()) {
+            throw new BadRequestException("El nombre es obligatorio");
+        }
     }
 }
