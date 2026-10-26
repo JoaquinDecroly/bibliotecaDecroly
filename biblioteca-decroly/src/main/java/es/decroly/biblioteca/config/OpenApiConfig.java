@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(
+@OpenAPIDefinition(info = @Info( //-----DESCRIPCIÓN SWAGGER-----
                                 title = "Biblioteca Decroly",
                                 version = "1.0.0",
                                 description = "API para gestionar categorías y libros"))

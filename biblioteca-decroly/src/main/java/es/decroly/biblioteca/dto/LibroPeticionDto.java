@@ -5,10 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+//-----ANOTACIONES LOMBOK----
+@Getter //OBTENER DATOS
+@Setter //MODIFICAR DATOS
+@NoArgsConstructor //CONSTRUCTOR SIN PARÁMETROS
+@AllArgsConstructor//CONSTRUCTOR CON PARÁMETROS
 public class LibroPeticionDto {
     private String isbn;
     private String titulo;

@@ -3,7 +3,7 @@ package es.decroly.biblioteca.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NO_CONTENT)
+@ResponseStatus(HttpStatus.NO_CONTENT) //-----ERROR SIN CONTENIDO(204)-----
     public class NotFoundException extends RuntimeException {
         public NotFoundException(String message) {
             super(message);

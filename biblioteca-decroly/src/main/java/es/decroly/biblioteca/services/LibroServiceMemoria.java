@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.exceptions.BadRequestException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
@@ -10,8 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class LibroServiceMemoria extends LibroServiceBase {
-//    public class LibroServiceMemoria implements LibroService extends LibroServiceBase
-public LibroServiceMemoria() {
+    //------AÑADIENDO UNOS CUANTOS LIBROS DE PRUEBA-----
+public LibroServiceMemoria(BibliotecaProperties properties) {
     super(List.of(
             new Libro(1L, "9780132350884", "Clean Code", "Robert C. Martin", "2008", 23L),
             new Libro(2L, "9780156013925", "El Principito", "Antoine de Saint-Exupéry", "1943", 19L),
@@ -53,7 +54,7 @@ public LibroServiceMemoria() {
             new Libro(38L, "9780345354901", "El silencio de los inocentes", "Thomas Harris", "1988", 38L),
             new Libro(39L, "9780316341516", "Mitología griega", "Edith Hamilton", "1942", 39L),
             new Libro(40L, "9780805092998", "La sexta extinción", "Elizabeth Kolbert", "2014", 40L)
-    ));
+    ), properties);
 }
     //    private static final Pattern ISBN_PATTERN = Pattern.compile("[0-9]{13}");
 //

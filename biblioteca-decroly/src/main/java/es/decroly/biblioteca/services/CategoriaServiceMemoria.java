@@ -1,8 +1,7 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
-import es.decroly.biblioteca.exceptions.BadRequestException;
-import es.decroly.biblioteca.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,10 +10,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CategoriaServiceMemoria extends CategoriaServiceBase {
-    private final List<Categoria> categorias = new ArrayList<>();
-    private final AtomicLong secuencia = new AtomicLong();
-
-    public CategoriaServiceMemoria() {
+    //------AÑADIENDO UNOS CUANTOS LIBROS DE PRUEBA-----
+    public CategoriaServiceMemoria(BibliotecaProperties properties) {
         super(List.of(
                 new Categoria(1L, "Tecnología", "Categoría de libros de tecnología"),
                 new Categoria(2L, "Ficción", "Categoría de libros de ficción"),
@@ -56,7 +53,7 @@ public class CategoriaServiceMemoria extends CategoriaServiceBase {
                 new Categoria(38L, "Crimen", "Categoría de libros de crimen y novela negra"),
                 new Categoria(39L, "Mitología", "Categoría de libros de mitología y leyendas"),
                 new Categoria(40L, "Medio ambiente", "Categoría de libros sobre ecología y medio ambiente")
-        ));
+        ), properties);
     }
 
 //    @Override

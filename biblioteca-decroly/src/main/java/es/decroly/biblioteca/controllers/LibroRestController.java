@@ -16,6 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+// ================== AUXILIARES ==================
+    // @RestController -> Clase que devuelve JSON
+    // @PathVariable   -> Valor de la ruta      -> /usuarios/{id}
+    // @RequestParam   -> Valor tras el ?       -> /buscar?nombre=Ana
+    // @RequestBody    -> JSON del body a objeto Java (POST/PUT/PATCH)
+    // @ResponseStatus -> Fija el código HTTP de respuesta
 
 @Tag(name = "Libros", description = "Gestión de libros")
 @RequestMapping("api/libros")
@@ -36,7 +42,22 @@ public class LibroRestController {
     /// ANOTACIONES
     ///////////////////////////////////////////////////////////////
 
-    //Listar libros dispponibles
+    // ================== ENDPOINTS LIBROS ==================
+        // Ruta base: /api/libros
+
+        // GET    /api/libros                -> Lista TODOS los libros
+        // GET    /api/libros/disponibles    -> Lista libros DISPONIBLES
+        // GET    /api/libros/autor/{autor}  -> Lista libros de un AUTOR      | @PathVariable autor
+        // GET    /api/libros/{id}/libros    -> Lista libros de una CATEGORÍA | @PathVariable id (categoría)
+        // GET    /api/libros/{id}           -> Obtiene UN libro por id       | @PathVariable id
+        // POST   /api/libros                -> CREA un libro                 | @RequestBody LibroPeticionDto
+        // PUT    /api/libros/{id}           -> MODIFICA un libro por id      | @PathVariable + @RequestBody
+        // DELETE /api/libros/{id}           -> BORRA un libro por id         | @PathVariable id
+
+        // Respuestas: 200 -> OK | 404 -> No encontrado
+
+
+    //----GET PARA OBTENER TODOS LOS LIBROS DISPONIBLES-----
     @Operation(summary = "Listar libros disponibles")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada")
     @ApiResponse(responseCode = "404", description = "Categoría no encontrada")
@@ -46,7 +67,7 @@ public class LibroRestController {
     }
 
 
-    //Listar todos los libros
+    //----GET PARA OBTENER TODOS LOS LIBROS-------
     @Operation(summary = "Listar todos los libros")
     @ApiResponse(responseCode = "200", description = "Mostrando todos los libros de la colección")
     @ApiResponse(responseCode = "404", description = "No hay libros en esta colección")
@@ -56,6 +77,7 @@ public class LibroRestController {
     }
 
 
+    //----GET PARA OBTENER TODOS LIBROS POR AUTOR----
     @Operation(summary = "Obtener libros por autor")
     @ApiResponse(responseCode = "200", description = "Este autor ha escrito estos libros")
     @ApiResponse(responseCode = "404", description = "Este autor es un fantasma y/o no existe")
@@ -64,6 +86,7 @@ public class LibroRestController {
         return libroService.listarLibrosDeAutor(autor);
     }
 
+    //----GET PARA OBTENER TODOS LIBROS POR CATEGORIA-----
     @Operation(summary = "Obtener libros por categoría")
     @ApiResponse(responseCode = "200", description = "Hay libros en esta categoría")
     @ApiResponse(responseCode = "404", description = "Esta categoría no contiene libros")
@@ -74,7 +97,7 @@ public class LibroRestController {
     }
 
 
-    //Obtener un libro por id
+    //----GET PARA OBTENER UN LIBRO POR ID-----
     @Operation(summary = "Obtener un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado")
     @ApiResponse(responseCode = "404", description = "Libro no encontrado")
@@ -83,7 +106,7 @@ public class LibroRestController {
         return libroService.buscarPorId(id);
     }
 
-    //Añade un libro
+    //---POST PARA CREAR UN LIBRO----
     @Operation(summary = "Añadir un libro")
     @ApiResponse(responseCode = "200", description = "Libro añadido exitosamente")
     @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir este libro")
@@ -93,7 +116,7 @@ public class LibroRestController {
     }
 
 
-    //Modificar un libro por id
+    //-----PUT PARA MODIFICAR UN LIBRO POR ID-----
     @Operation(summary = "Modificar un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado y modificado exitosamente")
     @ApiResponse(responseCode = "404", description = "Libro no modificada, posiblemente se deba a que no existe")
@@ -103,7 +126,7 @@ public class LibroRestController {
     }
 
 
-    //Eliminar un libro por id
+    //------DELETE PARA BORRAR LIBRO POR ID-----
     @Operation(summary = "Borrar un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado y eliminado exitosamente")
     @ApiResponse(responseCode = "404", description = "Libro no encontrado, y por ende, no eliminado")

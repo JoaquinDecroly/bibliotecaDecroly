@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
     public class GlobalErrorHandler {
 
-    //handler error recurso no encontrado
+    //----HANDLER ERROR RECURSO NO ENCONTRADO----
     @ExceptionHandler(NotFoundException.class)
         public ProblemDetail notFound(NotFoundException e){
             ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
             return problem;
         }
 
-    //handler error petición errónea
+    //-----HANDLER ERROR MALA PETICIÓN------
     @ExceptionHandler(BadRequestException.class)
         public ProblemDetail badRequest(BadRequestException e){
             ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.dto.LibroPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
@@ -13,7 +14,7 @@ public class LibroServiceBase implements LibroService {
     private final List<Libro> libros;
     private AtomicLong secuencia = new AtomicLong();
 
-    public LibroServiceBase(List<Libro> librosInd) {
+    public LibroServiceBase(List<Libro> librosInd, BibliotecaProperties properties) {
 //        crear("teclado", 49.8, 15);
 //        crear("raton", 66.3, 40);
 //        crear("mando", 87.5, 17);
@@ -30,11 +31,13 @@ public class LibroServiceBase implements LibroService {
         this.secuencia = new AtomicLong(maxId);
     }
 
+    //----METODO LISTAR LIBROS-----
     @Override
     public List<Libro> listarLibros() {
         return libros;
     }
 
+    //----METODO BUSCAR LIBRO POR ID----
     @Override
     public Libro buscarPorId(Long id) {
         return libros.stream()
@@ -43,6 +46,7 @@ public class LibroServiceBase implements LibroService {
                 .orElseThrow(() -> new NotFoundException("No se encontró el libro con id: " + id));
     }
 
+    //------METODO OBTENER LIBROS DISPONIBLES------
     @Override
     public List<Libro> listarLibrosDisponibles() {
         List<Libro> librosDisponibles = new ArrayList<>();
@@ -55,6 +59,7 @@ public class LibroServiceBase implements LibroService {
         return librosDisponibles;
     }
 
+    //-----METODO OBTNER LIBROS DE UNA CATEGORIA (DADO EL ID)----
     @Override
     public List<Libro> obtenerLibrosDeCategoria(Long id) {
         List<Libro> librosDeCategoria = new ArrayList<>();
@@ -67,6 +72,7 @@ public class LibroServiceBase implements LibroService {
         return librosDeCategoria;
     }
 
+    //-----METODO OBTENER LIBROS DE UN AUTOR (DADO EL NOMBRE DEL AUTOR)-----
     @Override
     public List<Libro> listarLibrosDeAutor(String autor) {
         List<Libro> librosDeAutor = new ArrayList<>();
@@ -79,6 +85,7 @@ public class LibroServiceBase implements LibroService {
         return librosDeAutor;
     }
 
+    //-----METODO CREAR CATEGORIA-----
     @Override
     public Libro crear(LibroPeticionDto libro) {
         validar(libro);
@@ -91,6 +98,7 @@ public class LibroServiceBase implements LibroService {
         return l;
     }
 
+    //----METODO MODIFICAR CATEGORIA----
     @Override
     public Libro modificar(Long id, LibroPeticionDto libro) {
         validar(libro);

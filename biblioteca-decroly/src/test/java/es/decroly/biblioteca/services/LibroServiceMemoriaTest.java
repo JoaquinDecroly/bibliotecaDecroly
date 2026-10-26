@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.dto.LibroPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
@@ -9,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LibroServiceMemoriaTest {
-    private final LibroServiceMemoria servicio = new LibroServiceMemoria();
+    private final BibliotecaProperties properties = new BibliotecaProperties("Biblioteca Test", 3, 15);
+    private final LibroServiceMemoria servicio = new LibroServiceMemoria(properties);
 
     @Test
     void crearInicializaDisponiblesConEjemplares() {

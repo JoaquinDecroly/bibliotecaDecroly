@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+// ================== AUXILIARES ==================
+    // @RestController -> Clase que devuelve JSON
+    // @PathVariable   -> Valor de la ruta      -> /usuarios/{id}
+    // @RequestParam   -> Valor tras el ?       -> /buscar?nombre=Ana
+    // @RequestBody    -> JSON del body a objeto Java (POST/PUT/PATCH)
+    // @ResponseStatus -> Fija el código HTTP de respuesta
+
 @Tag(name = "Categorías", description = "Gestión de categorías")
 @RequestMapping("api/categorias")
 @RestController
@@ -30,7 +37,20 @@ public class CategoriaRestController {
     /// ANOTACIONES
     ///////////////////////////////////////////////////////////////
 
-    //Listar todos las categorias
+    // ================== ENDPOINTS CATEGORÍAS ==================
+        // Ruta base: /api/categorias
+
+        // GET    /api/categorias        -> Lista TODAS las categorías
+        // GET    /api/categorias/{id}   -> Obtiene UNA categoría por id   | @PathVariable id
+        // POST   /api/categorias        -> CREA una categoría             | @RequestBody CategoriaPeticionDto
+        // PUT    /api/categorias/{id}   -> MODIFICA una categoría por id  | @PathVariable + @RequestBody
+        // DELETE /api/categorias/{id}   -> BORRA una categoría por id     | @PathVariable id
+
+        // Respuestas: 200 -> OK | 404 -> No encontrado
+
+////////////////////////////////////////////////////////////////////
+
+    //----GET PARA OBTENER TODAS LAS CATEGORÍAS-----
     @Operation(summary = "Listar todas las categorías")
     @ApiResponse(responseCode = "200", description = "Esta es la colección de categorías")
     @ApiResponse(responseCode = "404", description = "No hay colección de categorías")
@@ -39,7 +59,7 @@ public class CategoriaRestController {
         return categoriaService.listarCategorias();
     }
 
-    //Obtener una categoria por id
+    //----GET PARA OBTENER CATEGORÍA POR ID----
     @Operation(summary = "Obtener una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada")
     @ApiResponse(responseCode = "404", description = "Categoría no encontrada")
@@ -48,7 +68,7 @@ public class CategoriaRestController {
         return categoriaService.buscarPorId(id);
     }
 
-    //Añade una categoria
+    //-----POST PARA AÑADIR CATEGORIA-----
     @Operation(summary = "Añadir una categoría")
     @ApiResponse(responseCode = "200", description = "Categoría añadida exitosamente")
     @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir la categoría")
@@ -57,7 +77,7 @@ public class CategoriaRestController {
         return categoriaService.crear(dto);
     }
 
-    //Modificar una categoria por id
+    //----PUT PARA MODIFICAR CATEGORIA POR ID----
     @Operation(summary = "Modificar una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada y modificada exitosamente")
     @ApiResponse(responseCode = "404", description = "Categoría no encontrada, y por ende, no modificada")
@@ -66,7 +86,7 @@ public class CategoriaRestController {
         return categoriaService.modificar(id, dto);
     }
 
-    //Eliminar una categoria por id
+    //----DELETE PARA BORRAR CATEGORIA POR ID----
     @Operation(summary = "Borrar una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada y suprimida")
     @ApiResponse(responseCode = "404", description = "Categoría no encontrada, y por ende, no suprimida")
@@ -79,7 +99,7 @@ public class CategoriaRestController {
     /// FUNCIONES AUXILIARES
     ///////////////////////////////////////////////////////////////
 
-    //Función añadir una categoria
+    //----AUX. PARA AÑADIR CATEGORIA-----
     public void add(String nombre, String descripcion) {
         Long nuevoId = secuencia.incrementAndGet();
         categorias.add(new Categoria(nuevoId, nombre, descripcion));

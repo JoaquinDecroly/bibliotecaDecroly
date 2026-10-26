@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
 import org.springframework.core.io.ClassPathResource;
 import tools.jackson.databind.ObjectMapper;
@@ -9,9 +10,24 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+// ================== CategoriaServiceJSON ==================
+// Servicio de categorías que carga los datos desde un fichero JSON
+// Hereda de CategoriaServiceBase (ahí está la lógica: listar, crear, modificar, borrar...)
+
+// CONSTRUCTOR
+// -> Recibe el ObjectMapper (para leer JSON) y BibliotecaProperties (configuración)
+// -> Carga las categorías del JSON y se las pasa al padre con super(...)
+
+// cargar(mapper)
+// -> Busca "categorias.json" en resources (ClassPathResource)
+// -> Abre el fichero con try-with-resources (se cierra solo)
+// -> mapper.readValue(...) convierte el JSON en un array Categoria[]
+// -> List.of(...) pasa el array a lista
+////////////////////////////////////////////////////////////////
+
 public class CategoriaServiceJSON extends CategoriaServiceBase {
-    public CategoriaServiceJSON(ObjectMapper mapper) throws IOException {
-            super((ArrayList<Categoria>) cargar(mapper));
+    public CategoriaServiceJSON(ObjectMapper mapper, BibliotecaProperties properties) throws IOException {
+            super((ArrayList<Categoria>) cargar(mapper), properties);
     }
 
     private static List<Categoria> cargar(ObjectMapper mapper) throws IOException {

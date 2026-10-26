@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
@@ -10,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CategoriaServiceMemoriaTest {
-    private final CategoriaServiceMemoria servicio = new CategoriaServiceMemoria();
+    private final BibliotecaProperties properties = new BibliotecaProperties("Biblioteca Test", 3, 15);
+    private final CategoriaServiceMemoria servicio = new CategoriaServiceMemoria(properties);
 
     @Test
     void crearAsignaIdYPermiteBuscarCategoria() {

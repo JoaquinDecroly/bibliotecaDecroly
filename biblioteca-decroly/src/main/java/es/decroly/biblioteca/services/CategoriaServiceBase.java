@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.services;
 
+import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
@@ -13,7 +14,7 @@ public class CategoriaServiceBase implements CategoriaService{
     private final List<Categoria> categorias;
     private final AtomicLong secuencia;
 
-    public CategoriaServiceBase(List<Categoria> categoriasInd){
+    public CategoriaServiceBase(List<Categoria> categoriasInd, BibliotecaProperties properties){
         this.categorias = new ArrayList<>(categoriasInd);
         long maxId = 0;
 
@@ -26,12 +27,13 @@ public class CategoriaServiceBase implements CategoriaService{
         this.secuencia = new AtomicLong(maxId);
     }
 
-
+    //-----METODO LISTAR CATEGORIAS----
     @Override
     public List<Categoria> listarCategorias() {
         return categorias;
     }
 
+    //----METODO BUSCAR CATEGORIA POR ID------
     @Override
     public Categoria buscarPorId(Long id) {
         return categorias.stream()
@@ -40,6 +42,7 @@ public class CategoriaServiceBase implements CategoriaService{
                 .orElseThrow(() -> new NotFoundException("No se encontró la categoría con id: " + id));
     }
 
+    //-----METODO CREAR CATEGORIA-----
     @Override
     public Categoria crear(CategoriaPeticionDto categoria) {
         validar(categoria);
@@ -49,6 +52,7 @@ public class CategoriaServiceBase implements CategoriaService{
         return nueva;
     }
 
+    //----METODO MODIFICAR CATEGORIA----
     @Override
     public Categoria modificar(Long id, CategoriaPeticionDto categoria) {
         validar(categoria);
@@ -58,6 +62,7 @@ public class CategoriaServiceBase implements CategoriaService{
         return categoriaMod;
     }
 
+    //------METODO ELIMINAR CATEGORIA-----
     @Override
     public void eliminar(Long id) {
         boolean remove = categorias.removeIf(categoria -> categoria.getId().equals(id));
@@ -67,7 +72,7 @@ public class CategoriaServiceBase implements CategoriaService{
     }
     
 ////////////////////////////////////////////
-
+    //----AUXILIAR METODO VALIDACION----
     private void validar(CategoriaPeticionDto dto) {
         if (dto == null) {
             throw new BadRequestException("La categoría es obligatoria");
