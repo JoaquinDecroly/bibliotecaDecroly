@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Novela",
+      "descripcion": "Narrativa de ficción"
+    }
+order: 3000

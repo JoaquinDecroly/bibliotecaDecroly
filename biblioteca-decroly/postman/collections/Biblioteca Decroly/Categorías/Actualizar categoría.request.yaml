@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/categorias/{{categoriaId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Novela histórica",
+      "descripcion": "Narrativa ambientada en épocas pasadas"
+    }
+order: 4000

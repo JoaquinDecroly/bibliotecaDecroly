@@ -1,0 +1,7 @@
+$kind: collection
+description: Colección de endpoints REST para gestionar categorías y libros.
+variables:
+  baseUrl: http://localhost:8080
+  categoriaId: "1"
+  libroId: "1"
+  autor: Gabriel Garcia Marquez
