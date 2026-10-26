@@ -26,10 +26,24 @@ import java.util.List;
 ////////////////////////////////////////////////////////////////////////
 
 public class LibroServiceJSON extends LibroServiceBase {
+    /**
+     * Constructor que inicializa el servicio cargando libros desde un fichero JSON.
+     *
+     * @param mapper ObjectMapper para leer el JSON
+     * @param properties Propiedades de configuración de la biblioteca
+     * @throws IOException si hay error al leer el fichero JSON
+     */
     public LibroServiceJSON(ObjectMapper mapper, BibliotecaProperties properties) throws IOException {
         super((ArrayList<Libro>) cargar(mapper), properties);
     }
 
+    /**
+     * Carga la lista de libros desde el fichero JSON.
+     *
+     * @param mapper ObjectMapper para leer el JSON
+     * @return Lista de libros cargados desde el fichero
+     * @throws IOException si hay error al leer el fichero
+     */
     private static List<Libro> cargar(ObjectMapper mapper) throws IOException {
         ClassPathResource fichero = new ClassPathResource("libros.json");
         try (InputStream entrada = fichero.getInputStream()) {

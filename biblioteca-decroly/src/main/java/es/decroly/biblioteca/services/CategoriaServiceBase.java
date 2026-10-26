@@ -10,10 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Clase base que implementa la lógica común para el servicio de categorías.
+ * Proporciona una implementación en memoria de las operaciones CRUD.
+ * Las implementaciones específicas (Memoria, JSON) heredan de esta clase.
+ */
 public class CategoriaServiceBase implements CategoriaService{
+    /** Lista de categorías almacenadas en memoria */
     private final List<Categoria> categorias;
+    /** Generador de IDs secuenciales para nuevas categorías */
     private final AtomicLong secuencia;
 
+    /**
+     * Constructor que inicializa el servicio con una lista de categorías.
+     * Calcula el ID máximo existente para continuar la secuencia.
+     *
+     * @param categoriasInd Lista inicial de categorías
+     * @param properties Propiedades de configuración de la biblioteca
+     */
     public CategoriaServiceBase(List<Categoria> categoriasInd, BibliotecaProperties properties){
         this.categorias = new ArrayList<>(categoriasInd);
         long maxId = 0;
@@ -27,12 +41,24 @@ public class CategoriaServiceBase implements CategoriaService{
         this.secuencia = new AtomicLong(maxId);
     }
 
+    /**
+     * Lista todas las categorías del sistema.
+     *
+     * @return Lista completa de categorías
+     */
     //-----METODO LISTAR CATEGORIAS----
     @Override
     public List<Categoria> listarCategorias() {
         return categorias;
     }
 
+    /**
+     * Busca una categoría por su identificador.
+     *
+     * @param id Identificador de la categoría
+     * @return Categoría encontrada
+     * @throws NotFoundException si no existe una categoría con ese ID
+     */
     //----METODO BUSCAR CATEGORIA POR ID------
     @Override
     public Categoria buscarPorId(Long id) {
@@ -42,6 +68,13 @@ public class CategoriaServiceBase implements CategoriaService{
                 .orElseThrow(() -> new NotFoundException("No se encontró la categoría con id: " + id));
     }
 
+    /**
+     * Crea una nueva categoría en el sistema.
+     *
+     * @param categoria DTO con los datos de la categoría a crear
+     * @return Categoría creada con su ID asignado
+     * @throws BadRequestException si los datos son inválidos
+     */
     //-----METODO CREAR CATEGORIA-----
     @Override
     public Categoria crear(CategoriaPeticionDto categoria) {
@@ -52,6 +85,15 @@ public class CategoriaServiceBase implements CategoriaService{
         return nueva;
     }
 
+    /**
+     * Modifica una categoría existente.
+     *
+     * @param id Identificador de la categoría a modificar
+     * @param categoria DTO con los nuevos datos de la categoría
+     * @return Categoría modificada
+     * @throws NotFoundException si no existe la categoría
+     * @throws BadRequestException si los datos son inválidos
+     */
     //----METODO MODIFICAR CATEGORIA----
     @Override
     public Categoria modificar(Long id, CategoriaPeticionDto categoria) {
@@ -62,6 +104,12 @@ public class CategoriaServiceBase implements CategoriaService{
         return categoriaMod;
     }
 
+    /**
+     * Elimina una categoría del sistema.
+     *
+     * @param id Identificador de la categoría a eliminar
+     * @throws NotFoundException si no existe la categoría
+     */
     //------METODO ELIMINAR CATEGORIA-----
     @Override
     public void eliminar(Long id) {
@@ -71,7 +119,13 @@ public class CategoriaServiceBase implements CategoriaService{
         }
     }
     
-////////////////////////////////////////////
+    /**
+     * Valida los datos de una categoría antes de crear o modificar.
+     *
+     * @param dto DTO con los datos a validar
+     * @throws BadRequestException si los datos son inválidos
+     */
+    ////////////////////////////////////////////
     //----AUXILIAR METODO VALIDACION----
     private void validar(CategoriaPeticionDto dto) {
         if (dto == null) {

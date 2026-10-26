@@ -9,8 +9,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Implementación del servicio de libros que almacena los datos en memoria.
+ * Inicializa con una colección de libros de prueba predefinidos.
+ * Anotada con @Service para que Spring la detecte e inyecte automáticamente.
+ */
 @Service
 public class LibroServiceMemoria extends LibroServiceBase {
+    /**
+     * Constructor que inicializa el servicio con una lista de libros de prueba.
+     *
+     * @param properties Propiedades de configuración de la biblioteca
+     */
     //------AÑADIENDO UNOS CUANTOS LIBROS DE PRUEBA-----
 public LibroServiceMemoria(BibliotecaProperties properties) {
     super(List.of(

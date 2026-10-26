@@ -27,8 +27,14 @@ public class CategoriaRestController {
     private final List<Categoria> categorias = new ArrayList<>();
     private final AtomicLong secuencia = new AtomicLong();
 
+    /** Servicio de categorías para la lógica de negocio */
     private final CategoriaService categoriaService;
 
+    /**
+     * Constructor que inyecta el servicio de categorías.
+     *
+     * @param categoriaService Servicio de categorías
+     */
     public CategoriaRestController(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
     }
@@ -59,6 +65,13 @@ public class CategoriaRestController {
         return categoriaService.listarCategorias();
     }
 
+    /**
+     * Endpoint para obtener una categoría por su ID.
+     * GET /api/categorias/{id}
+     *
+     * @param id Identificador de la categoría
+     * @return Categoría encontrada
+     */
     //----GET PARA OBTENER CATEGORÍA POR ID----
     @Operation(summary = "Obtener una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada")
@@ -68,6 +81,13 @@ public class CategoriaRestController {
         return categoriaService.buscarPorId(id);
     }
 
+    /**
+     * Endpoint para crear una nueva categoría.
+     * POST /api/categorias
+     *
+     * @param dto DTO con los datos de la categoría a crear
+     * @return Categoría creada
+     */
     //-----POST PARA AÑADIR CATEGORIA-----
     @Operation(summary = "Añadir una categoría")
     @ApiResponse(responseCode = "200", description = "Categoría añadida exitosamente")
@@ -77,6 +97,14 @@ public class CategoriaRestController {
         return categoriaService.crear(dto);
     }
 
+    /**
+     * Endpoint para modificar una categoría existente.
+     * PUT /api/categorias/{id}
+     *
+     * @param id Identificador de la categoría a modificar
+     * @param dto DTO con los nuevos datos de la categoría
+     * @return Categoría modificada
+     */
     //----PUT PARA MODIFICAR CATEGORIA POR ID----
     @Operation(summary = "Modificar una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada y modificada exitosamente")
@@ -86,6 +114,12 @@ public class CategoriaRestController {
         return categoriaService.modificar(id, dto);
     }
 
+    /**
+     * Endpoint para eliminar una categoría.
+     * DELETE /api/categorias/{id}
+     *
+     * @param id Identificador de la categoría a eliminar
+     */
     //----DELETE PARA BORRAR CATEGORIA POR ID----
     @Operation(summary = "Borrar una categoría por id")
     @ApiResponse(responseCode = "200", description = "Categoría encontrada y suprimida")
@@ -99,6 +133,13 @@ public class CategoriaRestController {
     /// FUNCIONES AUXILIARES
     ///////////////////////////////////////////////////////////////
 
+    /**
+     * Método auxiliar para añadir una categoría directamente.
+     * No es un endpoint REST, es un método de utilidad interna.
+     *
+     * @param nombre Nombre de la categoría
+     * @param descripcion Descripción de la categoría
+     */
     //----AUX. PARA AÑADIR CATEGORIA-----
     public void add(String nombre, String descripcion) {
         Long nuevoId = secuencia.incrementAndGet();

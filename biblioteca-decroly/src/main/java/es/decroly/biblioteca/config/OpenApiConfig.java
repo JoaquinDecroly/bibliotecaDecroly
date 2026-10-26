@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configura la información general que se muestra en la documentación OpenAPI
+ * de la API de Biblioteca Decroly.
+ */
 @Configuration
 @OpenAPIDefinition(info = @Info( //-----DESCRIPCIÓN SWAGGER-----
                                 title = "Biblioteca Decroly",

@@ -30,9 +30,17 @@ public class LibroRestController {
     private final List<Libro> libros = new ArrayList<>();
     private final AtomicLong secuencia = new AtomicLong();
 
+    /** Servicio de libros para la lógica de negocio */
     private final LibroService libroService;
+    /** Servicio de categorías para validar relaciones */
     private final CategoriaService categoriaService;
 
+    /**
+     * Constructor que inyecta los servicios necesarios.
+     *
+     * @param libroService Servicio de libros
+     * @param categoriaService Servicio de categorías
+     */
     public LibroRestController(LibroService libroService, CategoriaService categoriaService) {
         this.libroService = libroService;
         this.categoriaService = categoriaService;
@@ -67,6 +75,12 @@ public class LibroRestController {
     }
 
 
+    /**
+     * Endpoint para listar todos los libros del sistema.
+     * GET /api/libros
+     *
+     * @return Lista completa de libros
+     */
     //----GET PARA OBTENER TODOS LOS LIBROS-------
     @Operation(summary = "Listar todos los libros")
     @ApiResponse(responseCode = "200", description = "Mostrando todos los libros de la colección")
@@ -77,6 +91,13 @@ public class LibroRestController {
     }
 
 
+    /**
+     * Endpoint para listar libros de un autor específico.
+     * GET /api/libros/autor/{autor}
+     *
+     * @param autor Nombre del autor a buscar
+     * @return Lista de libros del autor
+     */
     //----GET PARA OBTENER TODOS LIBROS POR AUTOR----
     @Operation(summary = "Obtener libros por autor")
     @ApiResponse(responseCode = "200", description = "Este autor ha escrito estos libros")
@@ -86,6 +107,13 @@ public class LibroRestController {
         return libroService.listarLibrosDeAutor(autor);
     }
 
+    /**
+     * Endpoint para listar libros de una categoría específica.
+     * GET /api/libros/{id}/libros
+     *
+     * @param id Identificador de la categoría
+     * @return Lista de libros de la categoría
+     */
     //----GET PARA OBTENER TODOS LIBROS POR CATEGORIA-----
     @Operation(summary = "Obtener libros por categoría")
     @ApiResponse(responseCode = "200", description = "Hay libros en esta categoría")
@@ -97,6 +125,13 @@ public class LibroRestController {
     }
 
 
+    /**
+     * Endpoint para obtener un libro por su ID.
+     * GET /api/libros/{id}
+     *
+     * @param id Identificador del libro
+     * @return Libro encontrado
+     */
     //----GET PARA OBTENER UN LIBRO POR ID-----
     @Operation(summary = "Obtener un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado")
@@ -106,6 +141,13 @@ public class LibroRestController {
         return libroService.buscarPorId(id);
     }
 
+    /**
+     * Endpoint para crear un nuevo libro.
+     * POST /api/libros
+     *
+     * @param dto DTO con los datos del libro a crear
+     * @return Libro creado
+     */
     //---POST PARA CREAR UN LIBRO----
     @Operation(summary = "Añadir un libro")
     @ApiResponse(responseCode = "200", description = "Libro añadido exitosamente")
@@ -116,6 +158,14 @@ public class LibroRestController {
     }
 
 
+    /**
+     * Endpoint para modificar un libro existente.
+     * PUT /api/libros/{id}
+     *
+     * @param id Identificador del libro a modificar
+     * @param dto DTO con los nuevos datos del libro
+     * @return Libro modificado
+     */
     //-----PUT PARA MODIFICAR UN LIBRO POR ID-----
     @Operation(summary = "Modificar un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado y modificado exitosamente")
@@ -126,6 +176,12 @@ public class LibroRestController {
     }
 
 
+    /**
+     * Endpoint para eliminar un libro.
+     * DELETE /api/libros/{id}
+     *
+     * @param id Identificador del libro a eliminar
+     */
     //------DELETE PARA BORRAR LIBRO POR ID-----
     @Operation(summary = "Borrar un Libro por id")
     @ApiResponse(responseCode = "200", description = "Libro encontrado y eliminado exitosamente")

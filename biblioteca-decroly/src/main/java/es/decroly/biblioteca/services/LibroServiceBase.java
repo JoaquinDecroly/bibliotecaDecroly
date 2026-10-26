@@ -10,10 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Clase base que implementa la lógica común para el servicio de libros.
+ * Proporciona una implementación en memoria de las operaciones CRUD y consultas especializadas.
+ * Las implementaciones específicas (Memoria, JSON) heredan de esta clase.
+ */
 public class LibroServiceBase implements LibroService {
+    /** Lista de libros almacenados en memoria */
     private final List<Libro> libros;
+    /** Generador de IDs secuenciales para nuevos libros */
     private AtomicLong secuencia = new AtomicLong();
 
+    /**
+     * Constructor que inicializa el servicio con una lista de libros.
+     * Calcula el ID máximo existente para continuar la secuencia.
+     *
+     * @param librosInd Lista inicial de libros
+     * @param properties Propiedades de configuración de la biblioteca
+     */
     public LibroServiceBase(List<Libro> librosInd, BibliotecaProperties properties) {
 //        crear("teclado", 49.8, 15);
 //        crear("raton", 66.3, 40);
@@ -31,12 +45,24 @@ public class LibroServiceBase implements LibroService {
         this.secuencia = new AtomicLong(maxId);
     }
 
+    /**
+     * Lista todos los libros del sistema.
+     *
+     * @return Lista completa de libros
+     */
     //----METODO LISTAR LIBROS-----
     @Override
     public List<Libro> listarLibros() {
         return libros;
     }
 
+    /**
+     * Busca un libro por su identificador.
+     *
+     * @param id Identificador del libro
+     * @return Libro encontrado
+     * @throws NotFoundException si no existe un libro con ese ID
+     */
     //----METODO BUSCAR LIBRO POR ID----
     @Override
     public Libro buscarPorId(Long id) {
@@ -46,6 +72,11 @@ public class LibroServiceBase implements LibroService {
                 .orElseThrow(() -> new NotFoundException("No se encontró el libro con id: " + id));
     }
 
+    /**
+     * Lista los libros que tienen ejemplares disponibles para préstamo.
+     *
+     * @return Lista de libros disponibles
+     */
     //------METODO OBTENER LIBROS DISPONIBLES------
     @Override
     public List<Libro> listarLibrosDisponibles() {
@@ -59,6 +90,12 @@ public class LibroServiceBase implements LibroService {
         return librosDisponibles;
     }
 
+    /**
+     * Obtiene los libros que pertenecen a una categoría específica.
+     *
+     * @param id Identificador de la categoría
+     * @return Lista de libros de la categoría
+     */
     //-----METODO OBTNER LIBROS DE UNA CATEGORIA (DADO EL ID)----
     @Override
     public List<Libro> obtenerLibrosDeCategoria(Long id) {
@@ -72,6 +109,13 @@ public class LibroServiceBase implements LibroService {
         return librosDeCategoria;
     }
 
+    /**
+     * Lista los libros escritos por un autor específico.
+     * La búsqueda no distingue entre mayúsculas y minúsculas.
+     *
+     * @param autor Nombre del autor
+     * @return Lista de libros del autor
+     */
     //-----METODO OBTENER LIBROS DE UN AUTOR (DADO EL NOMBRE DEL AUTOR)-----
     @Override
     public List<Libro> listarLibrosDeAutor(String autor) {
@@ -85,6 +129,14 @@ public class LibroServiceBase implements LibroService {
         return librosDeAutor;
     }
 
+    /**
+     * Crea un nuevo libro en el sistema.
+     * Inicializa ejemplares y disponibles a 1.
+     *
+     * @param libro DTO con los datos del libro a crear
+     * @return Libro creado con su ID asignado
+     * @throws BadRequestException si los datos son inválidos
+     */
     //-----METODO CREAR CATEGORIA-----
     @Override
     public Libro crear(LibroPeticionDto libro) {

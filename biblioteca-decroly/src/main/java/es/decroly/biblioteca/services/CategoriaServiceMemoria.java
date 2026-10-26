@@ -8,8 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Implementación del servicio de categorías que almacena los datos en memoria.
+ * Inicializa con una colección de categorías de prueba predefinidas.
+ * Anotada con @Service para que Spring la detecte e inyecte automáticamente.
+ */
 @Service
 public class CategoriaServiceMemoria extends CategoriaServiceBase {
+    /**
+     * Constructor que inicializa el servicio con una lista de categorías de prueba.
+     *
+     * @param properties Propiedades de configuración de la biblioteca
+     */
     //------AÑADIENDO UNOS CUANTOS LIBROS DE PRUEBA-----
     public CategoriaServiceMemoria(BibliotecaProperties properties) {
         super(List.of(
