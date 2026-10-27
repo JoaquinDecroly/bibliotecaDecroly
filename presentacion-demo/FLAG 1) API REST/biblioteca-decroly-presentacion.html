@@ -535,12 +535,17 @@ main, .pie { margin-left: var(--nav-ancho); }
 .simulador__cab p { color: var(--claro-suave); font-size: .95rem; }
 .simulador__form { grid-column: 1; display: grid; gap: 1rem; align-content: start; }
 .simulador__form label { display: grid; gap: .35rem; font-size: .9rem; color: var(--claro-suave); }
-.simulador__form select, .simulador__form input {
+.simulador__form select, .simulador__form input, .simulador__form textarea {
   font: inherit; font-family: var(--f-maquina); color: var(--claro); background: var(--sala-2); border: 1px solid var(--sala-3);
   border-radius: 2px; padding: .6rem .7rem; width: 100%;
 }
+.simulador__form textarea { font-size: .85rem; line-height: 1.5; resize: vertical; min-height: 9rem; }
+.simulador__form label[hidden] { display: none; }
 .simulador__form input:disabled { opacity: .45; }
-.simulador__form .boton { justify-self: start; }
+.simulador__acciones { display: flex; flex-wrap: wrap; gap: .7rem; }
+.simulador__acciones .boton--secundario { color: var(--claro-suave); }
+.simulador__datos { margin: 0; font-family: var(--f-maquina); font-size: .82rem; color: var(--claro-suave); }
+.simulador__estado .sello--warn { --tono: #e9c77e; }
 .simulador__salida { grid-column: 2; grid-row: 1 / span 2; min-width: 0; display: flex; flex-direction: column; }
 .simulador__estado { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 3rem; font-family: var(--f-maquina); color: var(--laton-claro); overflow-wrap: anywhere; }
 .simulador__estado .sello { mix-blend-mode: normal; }
@@ -604,6 +609,28 @@ main, .pie { margin-left: var(--nav-ancho); }
 /* ========================================================================
    PRUEBAS Y CIERRE
    ======================================================================== */
+.postman { margin-top: clamp(3rem, 6vw, 4.5rem); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 2rem clamp(2rem, 4vw, 3.5rem); align-items: start; }
+.postman h3 { font-family: var(--f-serif); font-weight: 700; font-size: 1.3rem; display: flex; gap: .6rem; align-items: center; margin-bottom: .8rem; }
+.postman h3 svg { color: var(--laton); width: 1.3rem; }
+.postman p { color: var(--claro-suave); margin-top: 0; }
+.postman__vars { margin: 1.2rem 0 0; display: grid; gap: .45rem; }
+.postman__vars div { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: .8rem; padding-bottom: .45rem; border-bottom: 1px dotted var(--sala-3); }
+.postman__vars dt { font-family: var(--f-maquina); color: var(--laton-claro); font-size: .9rem; }
+.postman__vars dd { margin: 0; font-size: .92rem; color: var(--claro-suave); overflow-wrap: anywhere; }
+.postman__carpetas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; }
+.postman__carpeta { background: var(--sala-2); border: 1px solid var(--sala-3); border-radius: 3px; padding: 1rem 1.1rem; }
+.postman__carpeta h4 { margin: 0 0 .6rem; font-family: var(--f-maquina); font-weight: 700; font-size: .95rem; color: var(--claro); }
+.postman__carpeta ol { list-style: none; margin: 0; padding: 0; }
+.postman__carpeta li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); gap: .5rem; align-items: baseline; padding: .32rem 0; border-top: 1px dotted var(--sala-3); font-size: .88rem; color: var(--claro-suave); }
+.postman__metodo { font-family: var(--f-maquina); font-weight: 700; font-size: .74rem; text-align: center; color: #fff; border-radius: 2px; padding: .05rem 0; }
+.postman__metodo[data-m="GET"] { background: var(--m-get); }
+.postman__metodo[data-m="POST"] { background: var(--m-post); }
+.postman__metodo[data-m="PUT"] { background: var(--m-put); }
+.postman__metodo[data-m="DELETE"] { background: var(--m-delete); }
+@media (max-width: 860px) { .postman, .postman__carpetas { grid-template-columns: minmax(0, 1fr); } }
+/* La lista de cierre mezcla <strong>, texto y <code>: con display:grid cada trozo era una celda y el texto se partía palabra a palabra. */
+.cierre .cierre__lista li { display: block; position: relative; padding-left: 2.5rem; }
+.cierre .cierre__lista li::before { position: absolute; left: 0; top: .85rem; }
 .pruebas { display: grid; grid-template-columns: .8fr 1.1fr 1.1fr; gap: 1.4rem; align-items: start; }
 .prueba h3 { font-family: var(--f-maquina); font-weight: 700; font-size: .98rem; margin-bottom: .2rem; overflow-wrap: anywhere; }
 .prueba__tipo { font-size: .82rem; color: var(--rojo); margin: 0 0 .5rem; font-family: var(--f-maquina); }
@@ -748,6 +775,83 @@ main, .pie { margin-left: var(--nav-ancho); }
       setTimeout(function () { r.classList.remove('js-anim'); }, 2500);
     })();
   </script>
+
+<!-- v0 visual system: Biblioteca Decroly · redesign preserve -->
+<style id="decroly-redesign-v0">
+:root {
+  --sala: #10241e;
+  --sala-2: #17372c;
+  --sala-3: #275043;
+  --manila: #e6c98f;
+  --manila-2: #d6b875;
+  --papel: #f4eddf;
+  --tinta: #1d2923;
+  --tinta-suave: #5f6c62;
+  --claro: #f5f1e8;
+  --claro-suave: #b8c9bd;
+  --laton: #c9a55b;
+  --laton-claro: #efd39b;
+  --laton-oscuro: #78612c;
+  --rojo: #ad4d3e;
+  --azul: #275d78;
+  --verde: #4c9467;
+  --sombra-ficha: 0 12px 30px -18px rgba(14,24,19,.42);
+  --radio-ficha: 3px;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--sala); color: var(--claro); }
+:focus-visible { outline: 3px solid var(--laton-claro); outline-offset: 4px; }
+.fichero { background: linear-gradient(90deg, #0c1c17, var(--sala)); border-right-color: var(--sala-3); }
+.fichero__lista a { transition: color .2s var(--ease), padding-left .2s var(--ease), background .2s; }
+.fichero__lista a:hover, .fichero__lista a[aria-current="true"] { color: var(--laton-claro); padding-left: .45rem; }
+.seccion { padding-top: clamp(5.25rem, 12vh, 9rem); padding-bottom: clamp(5.25rem, 12vh, 9rem); }
+.seccion--papel { background: var(--papel); }
+.seccion--sala { background: radial-gradient(110% 75% at 52% 0%, #1d4637 0%, var(--sala) 61%); }
+.seccion__cabecera { max-width: 64rem; }
+.seccion__ficha { color: var(--laton); letter-spacing: .08em; text-transform: uppercase; }
+.seccion--papel .seccion__ficha { color: var(--laton-oscuro); }
+.seccion h2 { letter-spacing: -.025em; }
+.seccion__entrada { max-width: 58ch; }
+.portada { background: radial-gradient(95% 72% at 86% 28%, rgba(201,165,91,.16), transparent 60%), var(--sala); }
+.portada__titulo { color: var(--manila); letter-spacing: -.04em; }
+.portada__titulo span + span { color: var(--laton-claro); }
+.boton { border-radius: 2px; min-height: 2.9rem; transition: transform .18s var(--ease), background .18s, border-color .18s, color .18s, box-shadow .18s; }
+.boton:focus-visible, .chip:focus-visible, .pestana:focus-visible, .nodo:focus-visible { box-shadow: 0 0 0 4px rgba(239,211,155,.22); }
+.boton--primario { background: var(--laton); color: var(--tinta); }
+.boton--primario:hover { background: var(--laton-claro); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+.boton--secundario:hover { border-color: var(--laton-claro); color: var(--laton-claro); }
+.ficha { background: #f8f0df; border-color: #d5c4a4; box-shadow: var(--sombra-ficha); }
+.ficha__signatura { color: var(--laton-oscuro); letter-spacing: .06em; }
+.codigo, pre.codigo { background: #15231e; border-left: 3px solid var(--laton); color: #d7e3d9; }
+.chip, .pestana { border-color: var(--sala-3); }
+.chip[aria-pressed="true"], .pestana[aria-selected="true"] { background: var(--laton); color: var(--tinta); border-color: var(--laton); }
+.sello--ok { background: var(--verde); }
+.sello--error { background: var(--rojo); }
+/* Mobile: preserve the information architecture, improve scanning and touch targets. */
+@media (max-width: 860px) {
+  .fichero { box-shadow: 14px 0 32px rgba(0,0,0,.24); }
+  .seccion { padding-top: 5rem; padding-bottom: 5rem; }
+  .seccion__cabecera { margin-bottom: 2.4rem; }
+  .portada { padding-top: 6.5rem; }
+  .boton, .chip, .pestana { min-height: 2.75rem; }
+}
+@media (max-width: 560px) {
+  body { font-size: 1rem; }
+  .seccion { padding-left: 1rem; padding-right: 1rem; }
+  .seccion h2 { font-size: clamp(2.35rem, 12vw, 3.2rem); }
+  .portada { padding-top: 6.75rem; }
+  .portada__titulo { font-size: clamp(3.55rem, 17vw, 5.4rem); }
+  .portada__acciones { display: grid; grid-template-columns: 1fr; }
+  .portada__acciones .boton { justify-content: center; }
+  .ficha { padding: 1.15rem 1rem 1.15rem 1.45rem; }
+  .codigo, pre.codigo { font-size: .76rem; border-left-width: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+</style>
+
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -777,7 +881,7 @@ main, .pie { margin-left: var(--nav-ancho); }
       <li><a href="#endpoints" data-n="07">Endpoints</a></li>
       <li><a href="#servicios" data-n="08">Servicios</a></li>
       <li><a href="#errores" data-n="09">Errores y OpenAPI</a></li>
-      <li><a href="#pruebas" data-n="10">Pruebas y cierre</a></li>
+      <li><a href="#pruebas" data-n="10">Pruebas, Postman y cierre</a></li>
     </ol>
     <div class="fichero__progreso" aria-hidden="true"><span></span></div>
     <p class="fichero__atajo">Pasa de sección con <span class="nowrap"><kbd>←</kbd> <kbd>→</kbd></span></p>
@@ -819,7 +923,7 @@ main, .pie { margin-left: var(--nav-ancho); }
             <p class="ficha__signatura">es.decroly.biblioteca</p>
             <p class="ficha__linea"><strong>Biblioteca Decroly</strong> : API REST para gestionar libros y categorías / Spring Boot 4.1.1. — Java 25.</p>
             <p class="ficha__linea">13 rutas HTTP en 2 controladores. — Datos de ejemplo en memoria: 40 libros, 40 categorías.</p>
-            <p class="ficha__linea">Documentación OpenAPI con springdoc.</p>
+            <p class="ficha__linea">Documentación OpenAPI con springdoc. — Colección Postman con las 13 peticiones.</p>
             <p class="ficha__materias">1. Libros &nbsp; 2. Categorías &nbsp; 3. Errores</p>
             <span class="ficha__agujero" aria-hidden="true"></span>
             <span class="sello sello--ok ficha__sello" aria-hidden="true"><b>200</b><small>OK</small></span>
@@ -851,7 +955,7 @@ main, .pie { margin-left: var(--nav-ancho); }
             <li><i data-lucide="list-filter" aria-hidden="true"></i><div><strong>Filtrar</strong> libros disponibles, libros de un autor y libros de una categoría.</div></li>
             <li><i data-lucide="pencil-line" aria-hidden="true"></i><div><strong>Crear, modificar y eliminar</strong> libros y categorías.</div></li>
             <li><i data-lucide="shield-check" aria-hidden="true"></i><div><strong>Validar</strong> los datos de entrada en los servicios y responder con errores 400 y 404 estructurados.</div></li>
-            <li><i data-lucide="file-text" aria-hidden="true"></i><div><strong>Documentarse</strong> sola con OpenAPI y Swagger UI.</div></li>
+            <li><i data-lucide="file-text" aria-hidden="true"></i><div><strong>Documentarse</strong> sola con OpenAPI y Swagger UI, y probarse con la colección de Postman incluida.</div></li>
           </ul>
         </div>
 
@@ -930,14 +1034,18 @@ main, .pie { margin-left: var(--nav-ancho); }
           <p>El pom no incluye JPA ni ningún driver de base de datos. Los datos viven en listas en memoria dentro de los servicios.</p>
         </div>
         <div class="stack-nota">
-          <h3><i data-lucide="settings-2" aria-hidden="true"></i>application.properties</h3>
+          <h3><i data-lucide="settings-2" aria-hidden="true"></i>application.properties → BibliotecaProperties</h3>
 <pre class="codigo codigo--compacto"><code>spring.application.name=biblioteca-decroly
 biblioteca.nombre=Biblioteca Decroly
 biblioteca.max-prestamos=3
 biblioteca.dias-prestamo=15
 
 server.port=8080</code></pre>
-          <p class="nota">Las propiedades <code>biblioteca.*</code> están declaradas, pero ninguna clase del proyecto las lee todavía. No hay gestión de préstamos implementada.</p>
+<pre class="codigo codigo--compacto"><code><span class="tk-an">@ConfigurationProperties</span>(prefix=<span class="tk-st">"biblioteca"</span>)
+<span class="tk-kw">public record</span> BibliotecaProperties(String nombre,
+                                   <span class="tk-kw">int</span> maxPrestamos,
+                                   <span class="tk-kw">int</span> diasPrestamo) { }</code></pre>
+          <p class="nota">Spring enlaza las propiedades <code>biblioteca.*</code> en el record <code>BibliotecaProperties</code> gracias a <code>@ConfigurationPropertiesScan</code> en la clase principal, y lo inyecta en el constructor de los servicios. De momento solo se recibe: los valores de préstamos quedan preparados, pero la gestión de préstamos no está implementada.</p>
         </div>
       </div>
     </section>
@@ -1110,22 +1218,30 @@ server.port=8080</code></pre>
 
       <div class="simulador" id="simulador">
         <div class="simulador__cab">
-          <h3><i data-lucide="terminal" aria-hidden="true"></i>Prueba las consultas de lectura</h3>
-          <p>Simulación en el navegador: reproduce la lógica de los servicios con los 40 libros y 40 categorías de ejemplo. No se conecta al servidor.</p>
+          <h3><i data-lucide="terminal" aria-hidden="true"></i>Prueba la API</h3>
+          <p>Simulación en el navegador de las 13 rutas: reproduce la lógica de los controladores y servicios con los 40 libros y 40 categorías de ejemplo. No se conecta al servidor.</p>
+          <p>Igual que en el servidor, lo que cambies con POST, PUT o DELETE se mantiene hasta que recargas la página o pulsas «Restaurar datos».</p>
           <p>La respuesta se muestra formateada; el servidor real la envía compacta y el orden de los campos puede variar.</p>
         </div>
-        <form class="simulador__form" id="sim-form">
+        <div class="simulador__form" id="sim-form" role="group" aria-label="Petición simulada">
           <label>Ruta
             <select id="sim-ruta"></select>
           </label>
-          <label id="sim-param-label">Parámetro
+          <label id="sim-param-label"><span id="sim-param-nombre">Parámetro</span>
             <input id="sim-param" type="text" autocomplete="off">
           </label>
-          <button type="submit" class="boton boton--primario"><i data-lucide="play" aria-hidden="true"></i>Enviar GET</button>
-        </form>
+          <label id="sim-cuerpo-label" hidden><span>Cuerpo (JSON)</span>
+            <textarea id="sim-cuerpo" rows="9" spellcheck="false" autocomplete="off"></textarea>
+          </label>
+          <div class="simulador__acciones">
+            <button type="button" class="boton boton--primario" id="sim-enviar"><i data-lucide="play" aria-hidden="true"></i><span>Enviar GET</span></button>
+            <button type="button" class="boton boton--secundario" id="sim-restaurar"><i data-lucide="rotate-ccw" aria-hidden="true"></i>Restaurar datos</button>
+          </div>
+          <p class="simulador__datos" id="sim-datos" aria-live="polite"></p>
+        </div>
         <div class="simulador__salida">
           <div class="simulador__estado"><span id="sim-url">GET /api/libros</span><span class="sello sello--peq" id="sim-sello" hidden><b></b><small></small></span></div>
-          <pre class="codigo codigo--salida" tabindex="0" aria-label="Respuesta simulada"><code id="sim-respuesta">Elige una ruta y pulsa «Enviar GET».</code></pre>
+          <pre class="codigo codigo--salida" tabindex="0" aria-label="Respuesta simulada"><code id="sim-respuesta">Elige una ruta y pulsa «Enviar».</code></pre>
         </div>
       </div>
     </section>
@@ -1244,13 +1360,52 @@ server.port=8080</code></pre>
       <div class="seccion__cabecera">
         <p class="seccion__ficha">Ficha 10</p>
         <h2 id="t-pruebas">Pruebas</h2>
-        <p class="seccion__entrada">Tres clases de prueba en <code>src/test/java</code>, con 22 métodos <code>@Test</code>. Las de servicio crean el servicio en memoria directamente, sin arrancar Spring.</p>
+        <p class="seccion__entrada">Tres clases de prueba en <code>src/test/java</code>, con 22 métodos <code>@Test</code>. Las de servicio crean el servicio en memoria directamente, sin arrancar Spring, pasándole un <code>BibliotecaProperties("Biblioteca Test", 3, 15)</code>. Y para probar la API arrancada, una colección de Postman.</p>
       </div>
 
       <div class="pruebas" id="pruebas-lista"></div>
       <div class="aviso aviso--claro">
         <i data-lucide="circle-help" aria-hidden="true"></i>
         <p>Esta presentación describe qué comprueba cada prueba, no su resultado: no se han ejecutado para prepararla. Para verlo, ejecuta <code>./mvnw test</code>.</p>
+      </div>
+
+      <div class="postman" aria-labelledby="t-postman">
+        <div>
+          <h3 id="t-postman"><i data-lucide="send" aria-hidden="true"></i>Colección de Postman</h3>
+          <p>La carpeta <code>postman/</code> guarda la colección <strong>Biblioteca Decroly</strong> en formato YAML, versionada junto al código. Tiene una petición por cada ruta de la API, con los cuerpos JSON de ejemplo ya escritos.</p>
+          <dl class="postman__vars">
+            <div><dt>{{baseUrl}}</dt><dd><code>http://localhost:8080</code></dd></div>
+            <div><dt>{{categoriaId}}</dt><dd>id de categoría para GET, PUT, DELETE y libros por categoría</dd></div>
+            <div><dt>{{libroId}}</dt><dd>id de libro para GET, PUT y DELETE</dd></div>
+            <div><dt>{{autor}}</dt><dd>nombre del autor para <code>/api/libros/autor/{autor}</code></dd></div>
+          </dl>
+          <p class="nota">Las variables se definen una vez en la colección; cambiar <code>baseUrl</code> basta para apuntar a otro servidor.</p>
+        </div>
+        <div class="postman__carpetas">
+          <section class="postman__carpeta" aria-label="Carpeta Categorías">
+            <h4>Categorías · 5</h4>
+            <ol>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Listar categorías</li>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Obtener categoría por ID</li>
+              <li><span class="postman__metodo" data-m="POST">POST</span>Crear categoría</li>
+              <li><span class="postman__metodo" data-m="PUT">PUT</span>Actualizar categoría</li>
+              <li><span class="postman__metodo" data-m="DELETE">DELETE</span>Eliminar categoría</li>
+            </ol>
+          </section>
+          <section class="postman__carpeta" aria-label="Carpeta Libros">
+            <h4>Libros · 8</h4>
+            <ol>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Listar libros</li>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Listar libros disponibles</li>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Listar libros por autor</li>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Listar libros por categoría</li>
+              <li><span class="postman__metodo" data-m="GET">GET</span>Obtener libro por ID</li>
+              <li><span class="postman__metodo" data-m="POST">POST</span>Crear libro</li>
+              <li><span class="postman__metodo" data-m="PUT">PUT</span>Actualizar libro</li>
+              <li><span class="postman__metodo" data-m="DELETE">DELETE</span>Eliminar libro</li>
+            </ol>
+          </section>
+        </div>
       </div>
 
       <div class="cierre">
@@ -1262,6 +1417,8 @@ server.port=8080</code></pre>
           <li><strong>Entrada separada del modelo.</strong> Los DTO evitan que el cliente fije id o disponibles.</li>
           <li><strong>Errores coherentes.</strong> Un manejador global y respuestas <code>ProblemDetail</code>.</li>
           <li><strong>Una API que se explica sola.</strong> OpenAPI y Swagger UI generados desde las anotaciones.</li>
+          <li><strong>Configuración tipada.</strong> Las propiedades <code>biblioteca.*</code> llegan a los servicios como un record.</li>
+          <li><strong>Documentado y listo para probar.</strong> README con el flujo de la aplicación, un README por paquete y la colección de Postman.</li>
         </ol>
 
         <div class="arranque">
@@ -1273,7 +1430,7 @@ server.port=8080</code></pre>
 .\mvnw.cmd spring-boot:run    # Windows</code></pre>
             <button type="button" class="copiar" data-copiar="#cmd-arranque"><i data-lucide="copy" aria-hidden="true"></i><span>Copiar</span></button>
           </div>
-          <p>La API queda en <code>http://localhost:8080</code> y Swagger UI en <code>http://localhost:8080/swagger-ui/index.html</code>.</p>
+          <p>La API queda en <code>http://localhost:8080</code> y Swagger UI en <code>http://localhost:8080/swagger-ui/index.html</code>. Para probarla, importa la carpeta <code>postman/</code> en Postman. Las pruebas se lanzan con <code>./mvnw test</code>.</p>
         </div>
       </div>
     </section>
@@ -1325,7 +1482,7 @@ window.BD = (function () {
   'use strict';
 
   // ---------------------------------------------------------------------------
-  // Datos semilla: CategoriaServiceMemoria() y LibroServiceMemoria()
+  // Datos semilla: CategoriaServiceMemoria(properties) y LibroServiceMemoria(properties)
   // ---------------------------------------------------------------------------
   const categorias = [
     [1, 'Tecnología', 'Categoría de libros de tecnología'],
@@ -1472,7 +1629,10 @@ window.BD = (function () {
       handler: 'LibroRestController.listarLibrosCategoria(Long id)',
       servicio: 'categoriaService.buscarPorId(id) → libroService.obtenerLibrosDeCategoria(id)',
       cuerpo: null, devuelve: 'List<Libro>',
-      errores: [{ status: 404, motivo: 'La categoría indicada no existe (la comprueba CategoriaService antes de filtrar).' }],
+      errores: [
+        { status: 404, motivo: 'La categoría indicada no existe (la comprueba CategoriaService antes de filtrar).' },
+        { status: 500, motivo: 'Si algún libro tiene categoriaId null (por ejemplo, creado sin categoría), l.getCategoriaId().equals(id) lanza NullPointerException.' }
+      ],
       notas: ['Aunque cuelga de /api/libros, el {id} de la ruta es el id de una categoría.'],
       curl: `curl ${BASE}/api/libros/23/libros`,
       sim: { tipo: 'categoriaLibros', param: 'id de categoría', ejemplo: '23' }
@@ -1572,7 +1732,7 @@ window.BD = (function () {
   const nodos = {
     cliente: {
       titulo: 'Cliente HTTP', sub: 'Postman, curl o Swagger UI', capa: 'Exterior',
-      texto: 'Envía peticiones HTTP con JSON a http://localhost:8080. El proyecto no incluye interfaz web propia: se consume como API.',
+      texto: 'Envía peticiones HTTP con JSON a http://localhost:8080. El proyecto no incluye interfaz web propia: se consume como API. La colección de Postman del repositorio trae una petición por ruta.',
       archivo: null, codigo: null
     },
     ctrlLibro: {
@@ -1635,7 +1795,7 @@ public class CategoriaPeticionDto {
     },
     base: {
       titulo: 'Clases base', sub: 'LibroServiceBase · CategoriaServiceBase', capa: 'Servicios',
-      texto: 'Contienen toda la lógica: lista en memoria (ArrayList), secuencia de ids (AtomicLong), búsquedas, filtros y validación. Lanzan NotFoundException y BadRequestException.',
+      texto: 'Contienen toda la lógica: lista en memoria (ArrayList), secuencia de ids (AtomicLong) que continúa desde el id más alto cargado, búsquedas, filtros y validación. Su constructor recibe la lista inicial y BibliotecaProperties. Lanzan NotFoundException y BadRequestException.',
       archivo: 'services/LibroServiceBase.java',
       codigo: `public Libro buscarPorId(Long id) {
     return libros.stream()
@@ -1647,16 +1807,16 @@ public class CategoriaPeticionDto {
     },
     memoria: {
       titulo: 'Implementación en memoria', sub: '@Service · LibroServiceMemoria · CategoriaServiceMemoria', capa: 'Almacenamiento',
-      texto: 'Únicas implementaciones registradas como bean (@Service), por lo que son las que usa la aplicación. Cargan 40 libros y 40 categorías de ejemplo en el constructor.',
+      texto: 'Únicas implementaciones registradas como bean (@Service), por lo que son las que usa la aplicación. Cargan 40 libros y 40 categorías de ejemplo en el constructor; Spring les inyecta BibliotecaProperties y ellas lo pasan a la clase base.',
       archivo: 'services/LibroServiceMemoria.java',
       codigo: `@Service
 public class LibroServiceMemoria extends LibroServiceBase {
-    public LibroServiceMemoria() {
+    public LibroServiceMemoria(BibliotecaProperties properties) {
         super(List.of(
             new Libro(1L, "9780132350884", "Clean Code",
                       "Robert C. Martin", "2008", 23L),
             /* … 40 libros … */
-        ));
+        ), properties);
     }
 }`
     },
@@ -1665,8 +1825,9 @@ public class LibroServiceMemoria extends LibroServiceBase {
       texto: 'Leen libros.json y categorias.json del classpath con un ObjectMapper de Jackson. No llevan @Service y esos ficheros no están en src/main/resources, así que no participan en la configuración actual.',
       archivo: 'services/LibroServiceJSON.java',
       codigo: `public class LibroServiceJSON extends LibroServiceBase {
-    public LibroServiceJSON(ObjectMapper mapper) throws IOException {
-        super((ArrayList<Libro>) cargar(mapper));
+    public LibroServiceJSON(ObjectMapper mapper,
+                            BibliotecaProperties properties) throws IOException {
+        super((ArrayList<Libro>) cargar(mapper), properties);
     }
     private static List<Libro> cargar(ObjectMapper mapper) throws IOException {
         ClassPathResource fichero = new ClassPathResource("libros.json");
@@ -1962,7 +2123,7 @@ public ProblemDetail badRequest(BadRequestException e){
     {
       clase: 'CategoriaServiceMemoriaTest',
       tipo: 'JUnit Jupiter, sin arrancar Spring',
-      descripcion: 'Prueba CategoriaServiceMemoria sin levantar Spring.',
+      descripcion: 'Prueba CategoriaServiceMemoria sin levantar Spring, con un BibliotecaProperties de prueba.',
       casos: [
         ['crearAsignaIdYPermiteBuscarCategoria', 'crear'],
         ['crearRechazaNombreVacio', 'validación'],
@@ -1979,7 +2140,7 @@ public ProblemDetail badRequest(BadRequestException e){
     {
       clase: 'LibroServiceMemoriaTest',
       tipo: 'JUnit Jupiter, sin arrancar Spring',
-      descripcion: 'Prueba LibroServiceMemoria sin levantar Spring.',
+      descripcion: 'Prueba LibroServiceMemoria sin levantar Spring, con un BibliotecaProperties de prueba.',
       casos: [
         ['crearInicializaDisponiblesConEjemplares', 'crear'],
         ['crearRechazaIsbnVacio', 'validación'],
@@ -2615,71 +2776,223 @@ public ProblemDetail badRequest(BadRequestException e){
   filtrar();
 
   // ------------------------------------------------------------------
-  // Simulador de lecturas: reproduce la lógica de LibroServiceBase / CategoriaServiceBase
+  // Simulador de las 13 rutas: reproduce LibroRestController / CategoriaRestController
+  // y la lógica de LibroServiceBase / CategoriaServiceBase sobre una copia de los datos.
+  // Sin <form>: los visores que cargan la página en un iframe con sandbox bloquean el submit.
   // ------------------------------------------------------------------
-  const lecturas = BD.endpoints.filter((ep) => ep.sim);
+  const SIM = {
+    'libros-listar': {},
+    'libros-disponibles': {},
+    'libros-id': { param: 'id', ejemplo: '1' },
+    'libros-autor': { param: 'autor', texto: true, ejemplo: 'Antoine de Saint-Exupéry' },
+    'libros-categoria': { param: 'id de categoría', ejemplo: '23' },
+    'libros-crear': { cuerpo: { isbn: '9780134757599', titulo: 'Refactoring', autor: 'Martin Fowler', anioPublicacion: '2018', ejemplares: 2, categoriaId: 23 } },
+    'libros-modificar': { param: 'id', ejemplo: '1', cuerpo: { isbn: '9780132350884', titulo: 'Clean Code', autor: 'Robert C. Martin', anioPublicacion: '2008', ejemplares: 2, categoriaId: 23 } },
+    'libros-eliminar': { param: 'id', ejemplo: '40' },
+    'cat-listar': {},
+    'cat-id': { param: 'id', ejemplo: '23' },
+    'cat-crear': { cuerpo: { nombre: 'Ajedrez', descripcion: 'Libros de ajedrez y estrategia' } },
+    'cat-modificar': { param: 'id', ejemplo: '23', cuerpo: { nombre: 'Programación', descripcion: 'Desarrollo de software' } },
+    'cat-eliminar': { param: 'id', ejemplo: '40' }
+  };
+  const rutasSim = BD.endpoints.filter((ep) => SIM[ep.id]);
   const selRuta = $('#sim-ruta');
   const inParam = $('#sim-param');
-  const etParam = $('#sim-param-label');
-  selRuta.innerHTML = lecturas.map((ep) => `<option value="${ep.id}">GET ${esc(ep.ruta)}</option>`).join('');
+  const etParamNombre = $('#sim-param-nombre');
+  const etCuerpo = $('#sim-cuerpo-label');
+  const inCuerpo = $('#sim-cuerpo');
+  const btnEnviar = $('#sim-enviar');
+  const simSello = $('#sim-sello');
+  const salida = $('#sim-respuesta');
 
-  function prepararParam() {
-    const ep = lecturas.find((x) => x.id === selRuta.value);
-    const tiene = Boolean(ep.sim.param);
-    inParam.disabled = !tiene;
-    inParam.value = tiene ? ep.sim.ejemplo : '';
-    inParam.placeholder = tiene ? ep.sim.ejemplo : 'Esta ruta no tiene parámetros';
-    etParam.firstChild.textContent = tiene ? `Parámetro {${ep.sim.param}}` : 'Parámetro';
+  // Estado en memoria, como el ArrayList y el AtomicLong de las clases base
+  const copia = (x) => JSON.parse(JSON.stringify(x));
+  const mayorId = (lista) => lista.reduce((m, x) => Math.max(m, x.id), 0);
+  let datos;
+  function restaurar() {
+    datos = { libros: copia(BD.libros), categorias: copia(BD.categorias) };
+    datos.secLibro = mayorId(datos.libros);
+    datos.secCat = mayorId(datos.categorias);
+    pintarDatos();
   }
-  selRuta.addEventListener('change', prepararParam);
-  prepararParam();
+  function pintarDatos() {
+    $('#sim-datos').textContent = `En memoria: ${datos.libros.length} libros · ${datos.categorias.length} categorías`;
+  }
+
+  selRuta.innerHTML = rutasSim.map((ep) => `<option value="${ep.id}">${ep.metodo} ${esc(ep.ruta)}</option>`).join('');
+  const rutaActual = () => rutasSim.find((x) => x.id === selRuta.value);
+
+  function prepararRuta() {
+    const ep = rutaActual();
+    const s = SIM[ep.id];
+    const tiene = Boolean(s.param);
+    inParam.disabled = !tiene;
+    inParam.value = tiene ? s.ejemplo : '';
+    inParam.placeholder = tiene ? s.ejemplo : 'Esta ruta no tiene parámetros';
+    etParamNombre.textContent = tiene ? `Parámetro {${s.param}}` : 'Parámetro';
+    etCuerpo.hidden = !s.cuerpo;
+    inCuerpo.value = s.cuerpo ? JSON.stringify(s.cuerpo, null, 2) : '';
+    $('span', btnEnviar).textContent = `Enviar ${ep.metodo}`;
+  }
+  selRuta.addEventListener('change', prepararRuta);
 
   const problema = (status, detail, instance) => ({
-    status,
+    status, url: instance,
     cuerpo: { type: 'about:blank', title: status === 404 ? 'Recurso no encontrado' : 'Petición errónea', status, detail, instance }
   });
+  // Excepción no capturada por GlobalErrorHandler: Spring Boot responde con su error por defecto
+  const error500 = (url, motivo) => ({
+    status: 500, url, motivo,
+    cuerpo: { timestamp: new Date().toISOString(), status: 500, error: 'Internal Server Error', path: url }
+  });
+  const enBlanco = (v) => v === null || v === undefined || String(v).trim() === '';
 
-  function simular(ep, param) {
-    const s = ep.sim;
-    const idNum = (v) => /^-?\d+$/.test(v.trim()) ? Number(v.trim()) : null;
-    switch (s.tipo) {
-      case 'libros': return { status: 200, cuerpo: BD.libros, url: '/api/libros' };
-      case 'disponibles': return { status: 200, cuerpo: BD.libros.filter((l) => l.disponibles > 0), url: '/api/libros/disponibles' };
-      case 'categorias': return { status: 200, cuerpo: BD.categorias, url: '/api/categorias' };
-      case 'libroId': {
-        const id = idNum(param); if (id === null) return { aviso: 'El id es un Long: escribe un número entero.' };
+  // Lee el cuerpo como lo haría Jackson con el DTO: campos ausentes → null (o 0 en un int)
+  function leerCuerpo(texto, campos) {
+    if (texto.trim() === '' || texto.trim() === 'null') {
+      return { aviso: 'Falta el cuerpo JSON. En el servidor real Spring lo rechaza con un 400 antes de llamar al controlador, así que no llega a ejecutarse validar().' };
+    }
+    let obj;
+    try { obj = JSON.parse(texto); } catch (e) {
+      return { aviso: 'El cuerpo no es JSON válido. En el servidor real Spring no podría convertirlo en DTO y respondería 400 antes de llegar al servicio.' };
+    }
+    if (typeof obj !== 'object' || Array.isArray(obj)) return { aviso: 'El cuerpo debe ser un objeto JSON: { … }.' };
+    const dto = {};
+    for (const [campo, tipo] of Object.entries(campos)) {
+      const v = obj[campo];
+      if (tipo === 'String') {
+        if (v === undefined || v === null) dto[campo] = null;
+        else if (typeof v === 'object') return { aviso: `${campo} debe ser texto.` };
+        else dto[campo] = String(v);
+      } else if (tipo === 'int') {
+        if (v === undefined) dto[campo] = 0;
+        else if (!Number.isInteger(v)) return { aviso: `${campo} es un int: escríbelo como número entero, por ejemplo 2.` };
+        else dto[campo] = v;
+      } else { // Long
+        if (v === undefined || v === null) dto[campo] = null;
+        else if (!Number.isInteger(v)) return { aviso: `${campo} es un Long: escríbelo como número entero o null.` };
+        else dto[campo] = v;
+      }
+    }
+    return { dto };
+  }
+  const CAMPOS_LIBRO = { isbn: 'String', titulo: 'String', autor: 'String', anioPublicacion: 'String', ejemplares: 'int', categoriaId: 'Long' };
+  const CAMPOS_CAT = { nombre: 'String', descripcion: 'String' };
+
+  // LibroServiceBase.validar / CategoriaServiceBase.validar (mismo orden y mensajes)
+  function validarLibro(d) {
+    if (enBlanco(d.isbn)) return 'El ISBN es obligatorio';
+    if (enBlanco(d.titulo)) return 'El título es obligatorio';
+    if (enBlanco(d.autor)) return 'El autor es obligatorio';
+    if (d.ejemplares < 1) return 'Debe haber al menos un ejemplar';
+    return null;
+  }
+  const validarCat = (d) => (enBlanco(d.nombre) ? 'El nombre es obligatorio' : null);
+
+  function simular(ep, param, texto) {
+    const s = SIM[ep.id];
+    let id = null;
+    if (s.param && !s.texto) {
+      if (!/^-?\d+$/.test(param.trim())) return { aviso: `El {${s.param}} es un Long: escribe un número entero.` };
+      id = Number(param.trim());
+    }
+    let dto = null;
+    if (s.cuerpo) {
+      const r = leerCuerpo(texto, ep.recurso === 'libros' ? CAMPOS_LIBRO : CAMPOS_CAT);
+      if (r.aviso) return r;
+      dto = r.dto;
+    }
+    const L = datos.libros, C = datos.categorias;
+    const noLibro = (url) => problema(404, 'No se encontró el libro con id: ' + id, url);
+    const noCat = (url) => problema(404, 'No se encontró la categoría con id: ' + id, url);
+
+    switch (ep.id) {
+      case 'libros-listar': return { status: 200, cuerpo: L, url: '/api/libros' };
+      case 'libros-disponibles': return { status: 200, cuerpo: L.filter((l) => l.disponibles > 0), url: '/api/libros/disponibles' };
+      case 'libros-id': {
         const url = '/api/libros/' + id;
-        const l = BD.libros.find((x) => x.id === id);
-        return l ? { status: 200, cuerpo: l, url } : { ...problema(404, 'No se encontró el libro con id: ' + id, url), url };
+        const l = L.find((x) => x.id === id);
+        return l ? { status: 200, cuerpo: l, url } : noLibro(url);
       }
-      case 'categoriaId': {
-        const id = idNum(param); if (id === null) return { aviso: 'El id es un Long: escribe un número entero.' };
-        const url = '/api/categorias/' + id;
-        const c = BD.categorias.find((x) => x.id === id);
-        return c ? { status: 200, cuerpo: c, url } : { ...problema(404, 'No se encontró la categoría con id: ' + id, url), url };
-      }
-      case 'categoriaLibros': {
-        const id = idNum(param); if (id === null) return { aviso: 'El id de categoría es un Long: escribe un número entero.' };
-        const url = `/api/libros/${id}/libros`;
-        if (!BD.categorias.some((x) => x.id === id)) return { ...problema(404, 'No se encontró la categoría con id: ' + id, url), url };
-        return { status: 200, cuerpo: BD.libros.filter((l) => l.categoriaId === id), url };
-      }
-      case 'autor': {
-        const autor = param.trim(); if (!autor) return { aviso: 'Escribe el nombre completo de un autor, por ejemplo Stephen King.' };
+      case 'libros-autor': {
+        const autor = param.trim();
+        if (!autor) return { aviso: 'Escribe el nombre completo de un autor, por ejemplo Stephen King.' };
         const url = '/api/libros/autor/' + encodeURIComponent(autor);
-        return { status: 200, cuerpo: BD.libros.filter((l) => l.autor.toLowerCase() === autor.toLowerCase()), url };
+        return { status: 200, cuerpo: L.filter((l) => l.autor.toLowerCase() === autor.toLowerCase()), url };
+      }
+      case 'libros-categoria': {
+        const url = `/api/libros/${id}/libros`;
+        if (!C.some((x) => x.id === id)) return noCat(url);
+        // obtenerLibrosDeCategoria hace l.getCategoriaId().equals(id): un libro sin categoría provoca NullPointerException
+        if (L.some((l) => l.categoriaId === null)) {
+          return error500(url, 'Hay algún libro con categoriaId null: l.getCategoriaId().equals(id) lanza NullPointerException, que GlobalErrorHandler no captura.');
+        }
+        return { status: 200, cuerpo: L.filter((l) => l.categoriaId === id), url };
+      }
+      case 'libros-crear': {
+        const url = '/api/libros';
+        const fallo = validarLibro(dto);
+        if (fallo) return problema(400, fallo, url);
+        const nuevo = { id: ++datos.secLibro, isbn: dto.isbn, titulo: dto.titulo, autor: dto.autor, anioPublicacion: dto.anioPublicacion, ejemplares: 1, disponibles: 1, categoriaId: dto.categoriaId };
+        L.push(nuevo);
+        return { status: 200, cuerpo: nuevo, url, motivo: dto.ejemplares !== 1 ? `Has enviado ejemplares = ${dto.ejemplares}, pero el constructor que usa crear() lo deja en 1.` : null };
+      }
+      case 'libros-modificar': {
+        const url = '/api/libros/' + id;
+        const fallo = validarLibro(dto); // se valida antes de buscar
+        if (fallo) return problema(400, fallo, url);
+        const l = L.find((x) => x.id === id);
+        if (!l) return noLibro(url);
+        Object.assign(l, { isbn: dto.isbn, titulo: dto.titulo, autor: dto.autor, anioPublicacion: dto.anioPublicacion, ejemplares: dto.ejemplares, categoriaId: dto.categoriaId });
+        return { status: 200, cuerpo: l, url };
+      }
+      case 'libros-eliminar': {
+        const url = '/api/libros/' + id;
+        const i = L.findIndex((x) => x.id === id);
+        if (i < 0) return noLibro(url);
+        L.splice(i, 1);
+        return { status: 200, vacio: true, url };
+      }
+      case 'cat-listar': return { status: 200, cuerpo: C, url: '/api/categorias' };
+      case 'cat-id': {
+        const url = '/api/categorias/' + id;
+        const c = C.find((x) => x.id === id);
+        return c ? { status: 200, cuerpo: c, url } : noCat(url);
+      }
+      case 'cat-crear': {
+        const url = '/api/categorias';
+        const fallo = validarCat(dto);
+        if (fallo) return problema(400, fallo, url);
+        const nueva = { id: ++datos.secCat, nombre: dto.nombre, descripcion: dto.descripcion };
+        C.push(nueva);
+        return { status: 200, cuerpo: nueva, url };
+      }
+      case 'cat-modificar': {
+        const url = '/api/categorias/' + id;
+        const fallo = validarCat(dto);
+        if (fallo) return problema(400, fallo, url);
+        const c = C.find((x) => x.id === id);
+        if (!c) return noCat(url);
+        c.nombre = dto.nombre; c.descripcion = dto.descripcion;
+        return { status: 200, cuerpo: c, url };
+      }
+      case 'cat-eliminar': {
+        const url = '/api/categorias/' + id;
+        const i = C.findIndex((x) => x.id === id);
+        if (i < 0) return noCat(url);
+        C.splice(i, 1);
+        return { status: 200, vacio: true, url, motivo: 'Los libros que apuntaban a esta categoría conservan su categoriaId.' };
       }
       default: return { aviso: 'Ruta no disponible en la simulación.' };
     }
   }
 
-  const simSello = $('#sim-sello');
-  $('#sim-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const ep = lecturas.find((x) => x.id === selRuta.value);
-    const r = simular(ep, inParam.value);
-    const salida = $('#sim-respuesta');
-    simSello.classList.remove('estampar', 'sello--ok', 'sello--error');
+  const SELLOS = { 200: ['OK', 'sello--ok'], 400: ['Bad Request', 'sello--warn'], 404: ['Not Found', 'sello--error'], 500: ['Server Error', 'sello--error'] };
+
+  function enviar() {
+    const ep = rutaActual();
+    const r = simular(ep, inParam.value, inCuerpo.value);
+    simSello.classList.remove('estampar', 'sello--ok', 'sello--error', 'sello--warn');
     if (r.aviso) {
       $('#sim-url').textContent = 'Sin enviar';
       simSello.hidden = true;
@@ -2687,16 +3000,31 @@ public ProblemDetail badRequest(BadRequestException e){
       return;
     }
     const n = Array.isArray(r.cuerpo) ? ` · ${r.cuerpo.length} ${r.cuerpo.length === 1 ? 'elemento' : 'elementos'}` : '';
-    $('#sim-url').textContent = `GET ${r.url}${n}`;
-    salida.innerHTML = resaltar(JSON.stringify(r.cuerpo, null, 2), 'json');
+    $('#sim-url').textContent = `${ep.metodo} ${r.url}${n}`;
+    let html = r.vacio ? '<span class="tk-cm">(cuerpo vacío: el método del controlador es void)</span>' : resaltar(JSON.stringify(r.cuerpo, null, 2), 'json');
+    if (r.motivo) html = `<span class="tk-cm">// ${esc(r.motivo)}</span>\n\n` + html;
+    salida.innerHTML = html;
     salida.parentElement.scrollTop = 0;
+    const [texto, clase] = SELLOS[r.status];
     simSello.hidden = false;
     $('b', simSello).textContent = r.status;
-    $('small', simSello).textContent = r.status === 200 ? 'OK' : 'Not Found';
-    simSello.classList.add(r.status === 200 ? 'sello--ok' : 'sello--error');
+    $('small', simSello).textContent = texto;
+    simSello.classList.add(clase);
     void simSello.offsetWidth;
     simSello.classList.add('estampar');
+    pintarDatos();
+  }
+
+  btnEnviar.addEventListener('click', enviar);
+  inParam.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); enviar(); } });
+  $('#sim-restaurar').addEventListener('click', () => {
+    restaurar();
+    $('#sim-url').textContent = 'Datos restaurados';
+    simSello.hidden = true;
+    salida.textContent = 'Vuelven los 40 libros y las 40 categorías de ejemplo, como al reiniciar la aplicación.';
   });
+  restaurar();
+  prepararRuta();
 
   // ------------------------------------------------------------------
   // Pruebas
