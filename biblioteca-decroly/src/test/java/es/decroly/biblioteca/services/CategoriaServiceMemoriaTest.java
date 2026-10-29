@@ -5,6 +5,7 @@ import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
+import es.decroly.biblioteca.services.categoria.CategoriaServiceMemoria;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

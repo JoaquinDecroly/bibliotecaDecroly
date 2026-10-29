@@ -1,13 +1,10 @@
-package es.decroly.biblioteca.services;
+package es.decroly.biblioteca.services.libro;
 
 import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
-import es.decroly.biblioteca.exceptions.BadRequestException;
-import es.decroly.biblioteca.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Implementación del servicio de libros que almacena los datos en memoria.

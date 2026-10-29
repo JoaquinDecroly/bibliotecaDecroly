@@ -4,6 +4,7 @@ import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.dto.LibroPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
+import es.decroly.biblioteca.services.libro.LibroServiceMemoria;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

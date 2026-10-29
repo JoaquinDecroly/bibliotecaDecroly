@@ -1,12 +1,10 @@
-package es.decroly.biblioteca.services;
+package es.decroly.biblioteca.services.categoria;
 
 import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Implementación del servicio de categorías que almacena los datos en memoria.

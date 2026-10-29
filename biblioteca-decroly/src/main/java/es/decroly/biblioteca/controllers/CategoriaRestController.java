@@ -2,8 +2,7 @@ package es.decroly.biblioteca.controllers;
 
 import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.dto.CategoriaPeticionDto;
-import es.decroly.biblioteca.exceptions.NotFoundException;
-import es.decroly.biblioteca.services.CategoriaService;
+import es.decroly.biblioteca.services.categoria.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

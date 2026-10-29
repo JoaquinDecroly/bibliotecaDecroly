@@ -1,4 +1,4 @@
-package es.decroly.biblioteca.services;
+package es.decroly.biblioteca.services.libro;
 
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.dto.LibroPeticionDto;

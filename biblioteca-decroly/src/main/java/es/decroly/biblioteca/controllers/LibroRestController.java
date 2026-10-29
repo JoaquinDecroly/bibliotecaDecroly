@@ -1,11 +1,10 @@
 package es.decroly.biblioteca.controllers;
 
 
-import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.domain.Libro;
 import es.decroly.biblioteca.dto.LibroPeticionDto;
-import es.decroly.biblioteca.services.CategoriaService;
-import es.decroly.biblioteca.services.LibroService;
+import es.decroly.biblioteca.services.categoria.CategoriaService;
+import es.decroly.biblioteca.services.libro.LibroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,5 +1,7 @@
-package es.decroly.biblioteca.exceptions;
+package es.decroly.biblioteca.exceptions.globalHandler;
 
+import es.decroly.biblioteca.exceptions.BadRequestException;
+import es.decroly.biblioteca.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
