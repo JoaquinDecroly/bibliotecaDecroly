@@ -6,11 +6,10 @@ import es.decroly.biblioteca.services.categoria.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 // ================== AUXILIARES ==================
     // @RestController -> Clase que devuelve JSON
@@ -23,9 +22,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("api/categorias")
 @RestController
 public class CategoriaRestController {
-    private final List<Categoria> categorias = new ArrayList<>();
-    private final AtomicLong secuencia = new AtomicLong();
-
     /** Servicio de categorías para la lógica de negocio */
     private final CategoriaService categoriaService;
 
@@ -89,9 +85,10 @@ public class CategoriaRestController {
      */
     //-----POST PARA AÑADIR CATEGORIA-----
     @Operation(summary = "Añadir una categoría")
-    @ApiResponse(responseCode = "200", description = "Categoría añadida exitosamente")
-    @ApiResponse(responseCode = "404", description = "Hubo un fallo al añadir la categoría")
+    @ApiResponse(responseCode = "201", description = "Categoría añadida exitosamente")
+    @ApiResponse(responseCode = "400", description = "Datos inválidos")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Categoria add(@RequestBody CategoriaPeticionDto dto) {
         return categoriaService.crear(dto);
     }
@@ -126,22 +123,5 @@ public class CategoriaRestController {
     @DeleteMapping("/{id}")
     public void remove(@PathVariable Long id) {
         categoriaService.eliminar(id);
-    }
-
-    ///////////////////////////////////////////////////////////////
-    /// FUNCIONES AUXILIARES
-    ///////////////////////////////////////////////////////////////
-
-    /**
-     * Método auxiliar para añadir una categoría directamente.
-     * No es un endpoint REST, es un método de utilidad interna.
-     *
-     * @param nombre Nombre de la categoría
-     * @param descripcion Descripción de la categoría
-     */
-    //----AUX. PARA AÑADIR CATEGORIA-----
-    public void add(String nombre, String descripcion) {
-        Long nuevoId = secuencia.incrementAndGet();
-        categorias.add(new Categoria(nuevoId, nombre, descripcion));
     }
 }

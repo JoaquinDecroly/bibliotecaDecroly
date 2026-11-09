@@ -67,7 +67,7 @@ Cada carpeta tiene su propio `README.md` con el detalle de sus clases.
 | `Libro` / `Categoria` | Entidades del dominio |
 | `LibroPeticionDto` / `CategoriaPeticionDto` | Datos que llegan en el body al crear o modificar |
 | `LibroService` / `CategoriaService` | Interfaces con los métodos del servicio |
-| `LibroServiceBase` / `CategoriaServiceBase` | Desarrollan los métodos y validan los datos |
+| `LibroServiceBase` / `BibliotecaServiceBase` | Desarrollan los métodos y validan los datos |
 | `LibroServiceMemoria` / `CategoriaServiceMemoria` | Cargan 40 libros y 40 categorías de prueba en memoria |
 | `LibroServiceJSON` / `CategoriaServiceJSON` | Cargan los datos desde `libros.json` / `categorias.json` |
 | `NotFoundException` | Se lanza cuando no existe el recurso → **404** |

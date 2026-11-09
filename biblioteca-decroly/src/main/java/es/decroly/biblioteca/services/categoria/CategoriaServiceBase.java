@@ -4,6 +4,7 @@ import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Categoria;
 import es.decroly.biblioteca.dto.CategoriaPeticionDto;
 import es.decroly.biblioteca.exceptions.BadRequestException;
+import es.decroly.biblioteca.exceptions.ConflictoException;
 import es.decroly.biblioteca.exceptions.NotFoundException;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class CategoriaServiceBase implements CategoriaService{
     @Override
     public Categoria crear(CategoriaPeticionDto categoria) {
         validar(categoria);
+        boolean nombreExiste = categorias.stream()
+                .anyMatch(c -> c.getNombre().equalsIgnoreCase(categoria.getNombre()));
+        if (nombreExiste) {
+            throw new ConflictoException("Ya existe una categoría con el nombre: " + categoria.getNombre());
+        }
         Long nId = secuencia.incrementAndGet();
         Categoria nueva = new Categoria(nId, categoria.getNombre(), categoria.getDescripcion());
         categorias.add(nueva);

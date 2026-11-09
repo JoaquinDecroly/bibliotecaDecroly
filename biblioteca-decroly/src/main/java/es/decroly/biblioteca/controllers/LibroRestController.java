@@ -85,24 +85,11 @@ public class LibroRestController {
     @ApiResponse(responseCode = "200", description = "Mostrando todos los libros de la colección")
     @ApiResponse(responseCode = "404", description = "No hay libros en esta colección")
     @GetMapping
-    public List<Libro> listarLibros() {
-        return libroService.listarLibros();
-    }
+    public List<Libro> listarLibros(@RequestParam(required = false) String autor) {
+        if(autor != null && !autor.isBlank()){
+            return libroService.listarLibros();
+        }
 
-
-    /**
-     * Endpoint para listar libros de un autor específico.
-     * GET /api/libros/autor/{autor}
-     *
-     * @param autor Nombre del autor a buscar
-     * @return Lista de libros del autor
-     */
-    //----GET PARA OBTENER TODOS LIBROS POR AUTOR----
-    @Operation(summary = "Obtener libros por autor")
-    @ApiResponse(responseCode = "200", description = "Este autor ha escrito estos libros")
-    @ApiResponse(responseCode = "404", description = "Este autor es un fantasma y/o no existe")
-    @GetMapping("autor/{autor}")
-    public List<Libro> getLibroByAutor(@PathVariable String autor) {
         return libroService.listarLibrosDeAutor(autor);
     }
 

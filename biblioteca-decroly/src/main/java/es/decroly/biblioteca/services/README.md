@@ -28,7 +28,7 @@ Solo **declara** los métodos. Es lo único que conocen los controllers.
 | `modificar(id, dto)` | `modificar(id, dto)` |
 | `eliminar(id)` | `eliminar(id)` |
 
-## 2️⃣ Base: `LibroServiceBase` / `CategoriaServiceBase`
+## 2️⃣ Base: `LibroServiceBase` / `BibliotecaServiceBase`
 
 **Desarrolla** todos los métodos sobre una `List` interna.
 
