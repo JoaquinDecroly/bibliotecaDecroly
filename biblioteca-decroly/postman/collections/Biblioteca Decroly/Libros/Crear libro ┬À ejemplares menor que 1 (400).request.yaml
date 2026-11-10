@@ -1,0 +1,28 @@
+$kind: http-request
+url: "{{baseUrl}}/api/libros"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "isbn": "9788491050293",
+      "titulo": "Don Quijote de la Mancha",
+      "autor": "Miguel de Cervantes",
+      "anioPublicacion": 1605,
+      "ejemplares": 0,
+      "categoriaId": {{categoriaId}}
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código de estado 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("El error es un ProblemDetail", function () {
+          pm.expect(pm.response.headers.get("Content-Type")).to.include("application/problem+json");
+          pm.expect(pm.response.json().status).to.eql(400);
+      });
+    language: text/javascript
+order: 8000

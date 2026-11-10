@@ -1,10 +1,17 @@
 package es.decroly.biblioteca.services.Biblioteca;
 
+import es.decroly.biblioteca.dto.BibliotecaInfoDto;
+
 /**
- * Interfaz que define las operaciones de servicio para la gestión de categorías.
- * Proporciona métodos para listar, buscar, crear, modificar y eliminar categorías de libros.
+ * Interfaz que define las operaciones de servicio para la información de la biblioteca.
+ * Proporciona los datos generales configurados en {@code application.properties}.
  */
 public interface BibliotecaService {
 
-    String obtenerInfoBiblio();
+    /**
+     * Obtiene la información general de la biblioteca.
+     *
+     * @return DTO con el nombre de la biblioteca, el máximo de préstamos y los días de préstamo
+     */
+    BibliotecaInfoDto obtenerInfoBiblio();
 }

@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/biblioteca/info"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código de estado 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Devuelve nombre, máximo de préstamos y días de préstamo", function () {
+          const info = pm.response.json();
+          pm.expect(info.nombre).to.be.a("string");
+          pm.expect(info.maxPrestamos).to.be.a("number");
+          pm.expect(info.diasPrestamo).to.be.a("number");
+      });
+    language: text/javascript
+order: 1000

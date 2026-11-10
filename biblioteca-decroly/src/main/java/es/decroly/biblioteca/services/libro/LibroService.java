@@ -57,6 +57,7 @@ public interface LibroService {
      * @param libro DTO con los datos del libro a crear
      * @return Libro creado con su ID asignado
      * @throws BadRequestException si los datos son inválidos
+     * @throws ConflictoException si ya existe un libro con ese ISBN
      */
     Libro crear(LibroPeticionDto libro);
 
@@ -68,6 +69,7 @@ public interface LibroService {
      * @return Libro modificado
      * @throws NotFoundException si no existe el libro
      * @throws BadRequestException si los datos son inválidos
+     * @throws ConflictoException si otro libro ya tiene ese ISBN
      */
     Libro modificar(Long id, LibroPeticionDto libro);
 
@@ -78,7 +80,4 @@ public interface LibroService {
      * @throws NotFoundException si no existe el libro
      */
     void eliminar(Long id);
-
-
-
 }

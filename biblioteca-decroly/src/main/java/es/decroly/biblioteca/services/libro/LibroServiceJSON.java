@@ -1,13 +1,12 @@
 package es.decroly.biblioteca.services.libro;
 
-import es.decroly.biblioteca.config.BibliotecaProperties;
 import es.decroly.biblioteca.domain.Libro;
+import es.decroly.biblioteca.services.categoria.CategoriaService;
 import org.springframework.core.io.ClassPathResource;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 // ================== LibroServiceJSON ==================
@@ -15,7 +14,7 @@ import java.util.List;
 // Hereda de LibroServiceBase (ahí está la lógica: listar, crear, modificar, borrar...)
 
 // CONSTRUCTOR
-// -> Recibe el ObjectMapper (para leer JSON) y BibliotecaProperties (configuración)
+// -> Recibe el ObjectMapper (para leer JSON) y el CategoriaService (para validar la categoría)
 // -> Carga los libros del JSON y se los pasa al padre con super(...)
 
 // cargar(mapper)
@@ -30,11 +29,11 @@ public class LibroServiceJSON extends LibroServiceBase {
      * Constructor que inicializa el servicio cargando libros desde un fichero JSON.
      *
      * @param mapper ObjectMapper para leer el JSON
-     * @param properties Propiedades de configuración de la biblioteca
+     * @param categoriaService Servicio de categorías
      * @throws IOException si hay error al leer el fichero JSON
      */
-    public LibroServiceJSON(ObjectMapper mapper, BibliotecaProperties properties) throws IOException {
-        super((ArrayList<Libro>) cargar(mapper), properties);
+    public LibroServiceJSON(ObjectMapper mapper, CategoriaService categoriaService) throws IOException {
+        super(cargar(mapper), categoriaService);
     }
 
     /**

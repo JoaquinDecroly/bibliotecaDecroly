@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,78 +16,36 @@ import lombok.Setter;
 @Setter //MODIFICAR DATOS
 @NoArgsConstructor //CONSTRUCTOR SIN PARÁMETROS
 @AllArgsConstructor//CONSTRUCTOR CON PARÁMETROS
+@Schema(description = "Libro de la biblioteca")
 public class Libro {
     /** Identificador único del libro */
+    @Schema(description = "Identificador del libro", example = "41")
     private Long id;
     /** ISBN (International Standard Book Number) del libro */
+    @Schema(description = "ISBN de 13 cifras", example = "9788491050292")
     private String isbn;
     /** Título del libro */
+    @Schema(description = "Título del libro", example = "Don Quijote de la Mancha")
     private String titulo;
     /** Autor del libro */
+    @Schema(description = "Autor del libro", example = "Miguel de Cervantes")
     private String autor;
     /** Año de publicación del libro */
-    private String anioPublicacion;
+    @Schema(description = "Año de publicación", example = "1605")
+    private Integer anioPublicacion;
     /** Número total de ejemplares del libro */
+    @Schema(description = "Número total de ejemplares", example = "2")
     private int ejemplares;
     /** Número de ejemplares disponibles para préstamo */
+    @Schema(description = "Ejemplares disponibles para préstamo", example = "2")
     private int disponibles;
     /** Identificador de la categoría a la que pertenece el libro */
+    @Schema(description = "Id de la categoría a la que pertenece", example = "16")
     private Long categoriaId;
 
     /**
-     * Constructor que crea un libro con ID especificado.
-     * Inicializa ejemplares y disponibles a 1, y sin categoría.
-     *
-     * @param nId Identificador del libro
-     * @param titulo Título del libro
-     * @param isbn ISBN del libro
-     * @param autor Autor del libro
-     * @param anioPublicacion Año de publicación
-     */
-    public Libro(Long nId, String titulo, String isbn, String autor, String anioPublicacion) {
-        this.id = nId;
-        this.titulo = titulo;
-        this.isbn = isbn;
-        this.autor = autor;
-        this.anioPublicacion = anioPublicacion;
-        this.ejemplares = 1;
-        this.disponibles = 1;
-        this.categoriaId = null;
-    }
-
-    /**
-     * Constructor que crea un libro sin ID.
-     * Inicializa ejemplares y disponibles a 1, y sin categoría.
-     *
-     * @param isbn ISBN del libro
-     * @param titulo Título del libro
-     * @param autor Autor del libro
-     * @param anioPublicacion Año de publicación
-     */
-    public Libro(String isbn, String titulo, String autor, String anioPublicacion) {
-        this.titulo = titulo;
-        this.isbn = isbn;
-        this.autor = autor;
-        this.anioPublicacion = anioPublicacion;
-        this.ejemplares = 1;
-        this.disponibles = 1;
-        this.categoriaId = null;
-    }
-
-//    public Libro(Long nuevoId, String isbn, String titulo, String autor, String anioPublicacion, AtomicReference<Long> categoriaId) {
-//        this.id = nuevoId;
-//        this.titulo = titulo;
-//        this.isbn = isbn;
-//        this.autor = autor;
-//        this.anioPublicacion = anioPublicacion;
-//        this.ejemplares = 1;
-//        this.disponibles = 1;
-//        this.categoriaId = categoriaId.get();
-//    }
-
-    /**
      * Constructor que crea un libro con ID y categoría especificados.
-     * Inicializa ejemplares y disponibles a 1.
+     * Inicializa ejemplares y disponibles a 1 (se usa para los libros de prueba).
      *
      * @param nuevoId Identificador del libro
      * @param isbn ISBN del libro
@@ -95,28 +54,8 @@ public class Libro {
      * @param anioPublicacion Año de publicación
      * @param categoriaId Identificador de la categoría
      */
-    public Libro(Long nuevoId, String isbn, String titulo, String autor, String anioPublicacion, Long categoriaId) {
+    public Libro(Long nuevoId, String isbn, String titulo, String autor, Integer anioPublicacion, Long categoriaId) {
         this.id = nuevoId;
-        this.titulo = titulo;
-        this.isbn = isbn;
-        this.autor = autor;
-        this.anioPublicacion = anioPublicacion;
-        this.ejemplares = 1;
-        this.disponibles = 1;
-        this.categoriaId = categoriaId;
-    }
-
-    /**
-     * Constructor que crea un libro sin ID pero con categoría.
-     * Inicializa ejemplares y disponibles a 1.
-     *
-     * @param isbn ISBN del libro
-     * @param titulo Título del libro
-     * @param autor Autor del libro
-     * @param anioPublicacion Año de publicación
-     * @param categoriaId Identificador de la categoría
-     */
-    public Libro(String isbn, String titulo, String autor, String anioPublicacion, Long categoriaId) {
         this.titulo = titulo;
         this.isbn = isbn;
         this.autor = autor;

@@ -1,5 +1,6 @@
 package es.decroly.biblioteca.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,16 @@ import lombok.Setter;
 @Setter //MODIFICAR DATOS
 @NoArgsConstructor //CONSTRUCTOR SIN PARÁMETROS
 @AllArgsConstructor//CONSTRUCTOR CON PARÁMETROS
+@Schema(description = "Categoría de libros")
 public class Categoria {
     /** Identificador único de la categoría */
+    @Schema(description = "Identificador de la categoría", example = "16")
     private Long id;
     /** Nombre de la categoría */
+    @Schema(description = "Nombre de la categoría", example = "Literatura clásica")
     private String nombre;
     /** Descripción detallada de la categoría */
+    @Schema(description = "Descripción de la categoría", example = "Categoría de libros de literatura clásica")
     private String descripcion;
 
     /**

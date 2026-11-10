@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Este nombre de categoría tiene más de cincuenta caracteres",
+      "descripcion": "Nombre demasiado largo"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código de estado 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("El error es un ProblemDetail", function () {
+          pm.expect(pm.response.headers.get("Content-Type")).to.include("application/problem+json");
+          pm.expect(pm.response.json().status).to.eql(400);
+      });
+    language: text/javascript
+order: 5000

@@ -1,7 +1,13 @@
 $kind: collection
-description: Colección de endpoints REST para gestionar categorías y libros.
+id: cc60a86c-0863-44f5-9fe8-dc4e85bdfbb8
+name: Biblioteca Decroly
+description: |-
+  Colección de endpoints REST para gestionar categorías y libros.
+
+  Ejecútala entera con el Runner y en orden: guarda en variables el id de la categoría y del libro creados, los usa en las peticiones siguientes y los borra al final, así que se puede repetir sin reiniciar la aplicación.
 variables:
   baseUrl: http://localhost:8080
   categoriaId: "1"
   libroId: "1"
-  autor: Gabriel Garcia Marquez
+  autor: tolkien
+  idInexistente: "999999"

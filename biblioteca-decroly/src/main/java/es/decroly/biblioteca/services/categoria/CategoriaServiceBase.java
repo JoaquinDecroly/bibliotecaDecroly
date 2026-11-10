@@ -70,11 +70,25 @@ public class CategoriaServiceBase implements CategoriaService{
     }
 
     /**
+     * Comprueba si existe una categoría con ese identificador.
+     *
+     * @param id Identificador de la categoría
+     * @return true si existe la categoría, false si no existe
+     */
+    //----METODO COMPROBAR SI EXISTE UNA CATEGORIA POR ID------
+    @Override
+    public boolean existePorId(Long id) {
+        return categorias.stream()
+                .anyMatch(c -> c.getId().equals(id));
+    }
+
+    /**
      * Crea una nueva categoría en el sistema.
      *
      * @param categoria DTO con los datos de la categoría a crear
      * @return Categoría creada con su ID asignado
      * @throws BadRequestException si los datos son inválidos
+     * @throws ConflictoException si ya existe una categoría con ese nombr
      */
     //-----METODO CREAR CATEGORIA-----
     @Override
@@ -99,6 +113,7 @@ public class CategoriaServiceBase implements CategoriaService{
      * @return Categoría modificada
      * @throws NotFoundException si no existe la categoría
      * @throws BadRequestException si los datos son inválidos
+     * @throws ConflictoException si otra categoría ya tiene ese nombre
      */
     //----METODO MODIFICAR CATEGORIA----
     @Override

@@ -1,0 +1,3 @@
+$kind: collection
+description: Se ejecuta al final porque los libros de prueba usan la categoría creada.
+order: 4000

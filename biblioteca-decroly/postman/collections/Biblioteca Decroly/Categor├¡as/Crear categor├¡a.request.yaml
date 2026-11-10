@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Teatro Postman",
+      "descripcion": "Categoría creada desde Postman"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código de estado 201", function () {
+          pm.response.to.have.status(201);
+      });
+      pm.test("Guarda el id de la categoría creada", function () {
+          const categoria = pm.response.json();
+          pm.expect(categoria.id).to.be.a("number");
+          pm.collectionVariables.set("categoriaId", categoria.id);
+      });
+    language: text/javascript
+order: 2000

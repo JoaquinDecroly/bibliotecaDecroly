@@ -1,0 +1,1491 @@
+{
+	"info": {
+		"_postman_id": "cc60a86c-0863-44f5-9fe8-dc4e85bdfbb8",
+		"name": "Biblioteca Decroly",
+		"description": "Colección de endpoints REST para gestionar categorías y libros.\n\nEjecútala entera con el Runner y en orden: guarda en variables el id de la categoría y del libro creados, los usa en las peticiones siguientes y los borra al final, así que se puede repetir sin reiniciar la aplicación.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Biblioteca",
+			"item": [
+				{
+					"name": "Información de la biblioteca",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Devuelve nombre, máximo de préstamos y días de préstamo\", function () {",
+									"    const info = pm.response.json();",
+									"    pm.expect(info.nombre).to.be.a(\"string\");",
+									"    pm.expect(info.maxPrestamos).to.be.a(\"number\");",
+									"    pm.expect(info.diasPrestamo).to.be.a(\"number\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/biblioteca/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"biblioteca",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorías",
+			"item": [
+				{
+					"name": "Listar categorías",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Devuelve una lista\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoría",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Guarda el id de la categoría creada\", function () {",
+									"    const categoria = pm.response.json();",
+									"    pm.expect(categoria.id).to.be.a(\"number\");",
+									"    pm.collectionVariables.set(\"categoriaId\", categoria.id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Teatro Postman\",\n  \"descripcion\": \"Categoría creada desde Postman\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoría · nombre repetido (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(409);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"TEATRO POSTMAN\",\n  \"descripcion\": \"Mismo nombre en mayúsculas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoría · sin nombre (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \" \",\n  \"descripcion\": \"Sin nombre\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoría · nombre de más de 50 caracteres (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Este nombre de categoría tiene más de cincuenta caracteres\",\n  \"descripcion\": \"Nombre demasiado largo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener categoría por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Es la categoría creada\", function () {",
+									"    pm.expect(pm.response.json().nombre).to.eql(\"Teatro Postman\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener categoría · no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{idInexistente}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{idInexistente}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoría",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"La descripción se ha modificado\", function () {",
+									"    pm.expect(pm.response.json().descripcion).to.eql(\"Descripción modificada\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Teatro Postman\",\n  \"descripcion\": \"Descripción modificada\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoría · nombre de otra categoría (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(409);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"ficción\",\n  \"descripcion\": \"Nombre que ya tiene otra categoría\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoría · sin nombre (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"\",\n  \"descripcion\": \"Sin nombre\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar categoría · no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{idInexistente}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{idInexistente}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"No existe\",\n  \"descripcion\": \"Categoría que no existe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Libros",
+			"item": [
+				{
+					"name": "Listar libros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Devuelve una lista\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar libros por autor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Todos los libros contienen el autor buscado (sin distinguir mayúsculas)\", function () {",
+									"    const libros = pm.response.json();",
+									"    const autor = pm.collectionVariables.get(\"autor\").toLowerCase();",
+									"    pm.expect(libros).to.be.an(\"array\").that.is.not.empty;",
+									"    libros.forEach(function (libro) {",
+									"        pm.expect(libro.autor.toLowerCase()).to.include(autor);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros?autor={{autor}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							],
+							"query": [
+								{
+									"key": "autor",
+									"value": "{{autor}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar libros disponibles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Todos tienen algún ejemplar disponible\", function () {",
+									"    pm.response.json().forEach(function (libro) {",
+									"        pm.expect(libro.disponibles).to.be.above(0);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/disponibles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"disponibles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Guarda el id del libro creado\", function () {",
+									"    const libro = pm.response.json();",
+									"    pm.expect(libro.id).to.be.a(\"number\");",
+									"    pm.collectionVariables.set(\"libroId\", libro.id);",
+									"});",
+									"pm.test(\"Al crear, disponibles = ejemplares\", function () {",
+									"    const libro = pm.response.json();",
+									"    pm.expect(libro.ejemplares).to.eql(5);",
+									"    pm.expect(libro.disponibles).to.eql(5);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050292\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro · ISBN repetido (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(409);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050292\",\n  \"titulo\": \"Otro libro con el mismo ISBN\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro · ISBN sin 13 cifras (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"12345\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro · sin título (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050293\",\n  \"titulo\": \"\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro · ejemplares menor que 1 (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050293\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 0,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear libro · categoría que no existe (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050293\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{idInexistente}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener libro por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Es el libro creado\", function () {",
+									"    pm.expect(pm.response.json().isbn).to.eql(\"9788491050292\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener libro · no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{idInexistente}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{idInexistente}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar libros por categoría",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Incluye el libro creado\", function () {",
+									"    const ids = pm.response.json().map(function (libro) { return libro.id; });",
+									"    pm.expect(ids).to.include(Number(pm.collectionVariables.get(\"libroId\")));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}",
+								"libros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar libros por categoría · no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{idInexistente}}/libros",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{idInexistente}}",
+								"libros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar libro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Se actualizan los ejemplares y los disponibles\", function () {",
+									"    const libro = pm.response.json();",
+									"    pm.expect(libro.titulo).to.eql(\"Don Quijote (edición revisada)\");",
+									"    pm.expect(libro.ejemplares).to.eql(8);",
+									"    pm.expect(libro.disponibles).to.eql(8);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050292\",\n  \"titulo\": \"Don Quijote (edición revisada)\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 8,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar libro · ISBN de otro libro (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(409);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9780132350884\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar libro · ejemplares menor que 1 (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050292\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 0,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar libro · no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{idInexistente}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{idInexistente}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"9788491050292\",\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"anioPublicacion\": 1605,\n  \"ejemplares\": 5,\n  \"categoriaId\": {{categoriaId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar libro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar libro · ya no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/libros/{{libroId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"libros",
+								"{{libroId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorías (borrado final)",
+			"description": "Se ejecuta al final porque los libros de prueba usan la categoría creada.",
+			"item": [
+				{
+					"name": "Eliminar categoría",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar categoría · ya no existe (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Código de estado 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"El error es un ProblemDetail\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/problem+json\");",
+									"    pm.expect(pm.response.json().status).to.eql(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								"{{categoriaId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "categoriaId",
+			"value": "1"
+		},
+		{
+			"key": "libroId",
+			"value": "1"
+		},
+		{
+			"key": "autor",
+			"value": "tolkien"
+		},
+		{
+			"key": "idInexistente",
+			"value": "999999"
+		}
+	]
+}

@@ -27,6 +27,15 @@ public interface CategoriaService {
     Categoria buscarPorId(Long id);
 
     /**
+     * Comprueba si existe una categoría con ese identificador.
+     *
+     * @param id Identificador de la categoría
+     * @return true si existe la categoría, false si no existe
+     */
+    boolean existePorId(Long id);
+
+
+    /**
      * Crea una nueva categoría en el sistema.
      *
      * @param categoria DTO con los datos de la categoría a crear

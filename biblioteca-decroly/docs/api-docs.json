@@ -1,1 +1,756 @@
-{"openapi":"3.1.0","info":{"title":"Biblioteca Decroly","description":"API para gestionar categorías y libros","version":"1.0.0"},"servers":[{"url":"http://localhost:8080","description":"Generated server url"}],"tags":[{"name":"Libros","description":"Gestión de libros"},{"name":"Categorías","description":"Gestión de categorías"}],"paths":{"/api/libros/{id}":{"get":{"tags":["Libros"],"summary":"Obtener un Libro por id","operationId":"getLibroById","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"Libro encontrado","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}},"404":{"description":"Libro no encontrado","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}}}},"put":{"tags":["Libros"],"summary":"Modificar un Libro por id","operationId":"modProd","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/LibroPeticionDto"}}},"required":true},"responses":{"200":{"description":"Libro encontrado y modificado exitosamente","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}},"404":{"description":"Libro no modificada, posiblemente se deba a que no existe","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}}}},"delete":{"tags":["Libros"],"summary":"Borrar un Libro por id","operationId":"remove","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"Libro encontrado y eliminado exitosamente"},"404":{"description":"Libro no encontrado, y por ende, no eliminado"}}}},"/api/categorias/{id}":{"get":{"tags":["Categorías"],"summary":"Obtener una categoría por id","operationId":"getCategoriaById","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"Categoría encontrada","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}},"404":{"description":"Categoría no encontrada","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}}}},"put":{"tags":["Categorías"],"summary":"Modificar una categoría por id","operationId":"modProd_1","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CategoriaPeticionDto"}}},"required":true},"responses":{"200":{"description":"Categoría encontrada y modificada exitosamente","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}},"404":{"description":"Categoría no encontrada, y por ende, no modificada","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}}}},"delete":{"tags":["Categorías"],"summary":"Borrar una categoría por id","operationId":"remove_1","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"Categoría encontrada y suprimida"},"404":{"description":"Categoría no encontrada, y por ende, no suprimida"}}}},"/api/libros":{"get":{"tags":["Libros"],"summary":"Listar todos los libros","operationId":"listarLibros","responses":{"200":{"description":"Mostrando todos los libros de la colección","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}},"404":{"description":"No hay libros en esta colección","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}}}},"post":{"tags":["Libros"],"summary":"Añadir un libro","operationId":"add","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/LibroPeticionDto"}}},"required":true},"responses":{"200":{"description":"Libro añadido exitosamente","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}},"404":{"description":"Hubo un fallo al añadir este libro","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Libro"}}}}}}},"/api/categorias":{"get":{"tags":["Categorías"],"summary":"Listar todas las categorías","operationId":"listarCategorias","responses":{"200":{"description":"Esta es la colección de categorías","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Categoria"}}}}},"404":{"description":"No hay colección de categorías","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Categoria"}}}}}}},"post":{"tags":["Categorías"],"summary":"Añadir una categoría","operationId":"add_1","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CategoriaPeticionDto"}}},"required":true},"responses":{"200":{"description":"Categoría añadida exitosamente","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}},"404":{"description":"Hubo un fallo al añadir la categoría","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Categoria"}}}}}}},"/api/libros/{id}/libros":{"get":{"tags":["Libros"],"summary":"Obtener libros por categoría","operationId":"listarLibrosCategoria","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"Hay libros en esta categoría","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}},"404":{"description":"Esta categoría no contiene libros","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}}}}},"/api/libros/disponibles":{"get":{"tags":["Libros"],"summary":"Listar libros disponibles","operationId":"listarLibrosDisponibles","responses":{"200":{"description":"Categoría encontrada","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}},"404":{"description":"Categoría no encontrada","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}}}}},"/api/libros/autor/{autor}":{"get":{"tags":["Libros"],"summary":"Obtener libros por autor","operationId":"getLibroByAutor","parameters":[{"name":"autor","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"Este autor ha escrito estos libros","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}},"404":{"description":"Este autor es un fantasma y/o no existe","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Libro"}}}}}}}}},"components":{"schemas":{"LibroPeticionDto":{"type":"object","properties":{"isbn":{"type":"string"},"titulo":{"type":"string"},"autor":{"type":"string"},"anioPublicacion":{"type":"string"},"ejemplares":{"type":"integer","format":"int32"},"categoriaId":{"type":"integer","format":"int64"}}},"Libro":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"isbn":{"type":"string"},"titulo":{"type":"string"},"autor":{"type":"string"},"anioPublicacion":{"type":"string"},"ejemplares":{"type":"integer","format":"int32"},"disponibles":{"type":"integer","format":"int32"},"categoriaId":{"type":"integer","format":"int64"}}},"CategoriaPeticionDto":{"type":"object","properties":{"nombre":{"type":"string"},"descripcion":{"type":"string"}}},"Categoria":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"nombre":{"type":"string"},"descripcion":{"type":"string"}}}}}}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Biblioteca Decroly",
+    "description": "API para gestionar categorías y libros",
+    "contact": {
+      "name": "Joaquín Valentín Ottonello",
+      "url": "https://github.com/JoaquinDecroly"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Biblioteca",
+      "description": "Información general de la biblioteca"
+    },
+    {
+      "name": "Libros",
+      "description": "Gestión de libros"
+    },
+    {
+      "name": "Categorías",
+      "description": "Gestión de categorías"
+    }
+  ],
+  "paths": {
+    "/api/libros/{id}": {
+      "get": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Obtener un Libro por id",
+        "operationId": "getLibroById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Libro encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Libro"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Libro no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Modificar un Libro por id",
+        "operationId": "modProd",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibroPeticionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Libro encontrado y modificado exitosamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Libro"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos (ISBN sin 13 cifras, falta título o autor, ejemplares menor que 1 o categoría que no existe)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Libro no encontrado, y por ende, no modificado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Otro libro ya tiene ese ISBN",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Borrar un Libro por id",
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Libro encontrado y eliminado exitosamente"
+          },
+          "404": {
+            "description": "Libro no encontrado, y por ende, no eliminado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias/{id}": {
+      "get": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Obtener una categoría por id",
+        "operationId": "getCategoriaById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categoria"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Modificar una categoría por id",
+        "operationId": "modProd_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaPeticionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Categoría encontrada y modificada exitosamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categoria"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos (nombre vacío o de más de 50 caracteres)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada, y por ende, no modificada",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Otra categoría ya tiene ese nombre",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Borrar una categoría por id",
+        "operationId": "remove_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoría encontrada y suprimida"
+          },
+          "404": {
+            "description": "Categoría no encontrada, y por ende, no suprimida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/libros": {
+      "get": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Listar todos los libros",
+        "description": "Con ?autor= filtra por autor (contiene, sin distinguir mayúsculas)",
+        "operationId": "listarLibros",
+        "parameters": [
+          {
+            "name": "autor",
+            "in": "query",
+            "description": "Texto que debe contener el autor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "king"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mostrando los libros de la colección",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Libro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Añadir un libro",
+        "operationId": "add",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibroPeticionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Libro añadido exitosamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Libro"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos (ISBN sin 13 cifras, falta título o autor, ejemplares menor que 1 o categoría que no existe)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ya existe un libro con ese ISBN",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias": {
+      "get": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Listar todas las categorías",
+        "operationId": "listarCategorias",
+        "responses": {
+          "200": {
+            "description": "Esta es la colección de categorías",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Categoria"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Añadir una categoría",
+        "operationId": "add_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaPeticionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Categoría añadida exitosamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categoria"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos (nombre vacío o de más de 50 caracteres)",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ya existe una categoría con ese nombre",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/libros/disponibles": {
+      "get": {
+        "tags": [
+          "Libros"
+        ],
+        "summary": "Listar libros disponibles",
+        "operationId": "listarLibrosDisponibles",
+        "responses": {
+          "200": {
+            "description": "Libros con algún ejemplar disponible",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Libro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categorias/{id}/libros": {
+      "get": {
+        "tags": [
+          "Categorías"
+        ],
+        "summary": "Obtener libros por categoría",
+        "operationId": "listarLibrosCategoria",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Libros de la categoría (lista vacía si no tiene ninguno)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Libro"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/biblioteca/info": {
+      "get": {
+        "tags": [
+          "Biblioteca"
+        ],
+        "summary": "Información de la biblioteca",
+        "description": "Devuelve el nombre de la biblioteca, el máximo de préstamos y los días de préstamo configurados",
+        "operationId": "obtenerInfoBiblioteca",
+        "responses": {
+          "200": {
+            "description": "Información de la biblioteca",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BibliotecaInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LibroPeticionDto": {
+        "type": "object",
+        "description": "Datos para crear o modificar un libro",
+        "properties": {
+          "isbn": {
+            "type": "string",
+            "description": "ISBN de 13 cifras, no se puede repetir",
+            "example": "9788491050292"
+          },
+          "titulo": {
+            "type": "string",
+            "description": "Título del libro (obligatorio)",
+            "example": "Don Quijote de la Mancha"
+          },
+          "autor": {
+            "type": "string",
+            "description": "Autor del libro (obligatorio)",
+            "example": "Miguel de Cervantes"
+          },
+          "anioPublicacion": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Año de publicación",
+            "example": 1605
+          },
+          "ejemplares": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Número de ejemplares (mínimo 1)",
+            "example": 2
+          },
+          "categoriaId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de una categoría que exista",
+            "example": 16
+          }
+        }
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "Libro": {
+        "type": "object",
+        "description": "Libro de la biblioteca",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identificador del libro",
+            "example": 41
+          },
+          "isbn": {
+            "type": "string",
+            "description": "ISBN de 13 cifras",
+            "example": "9788491050292"
+          },
+          "titulo": {
+            "type": "string",
+            "description": "Título del libro",
+            "example": "Don Quijote de la Mancha"
+          },
+          "autor": {
+            "type": "string",
+            "description": "Autor del libro",
+            "example": "Miguel de Cervantes"
+          },
+          "anioPublicacion": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Año de publicación",
+            "example": 1605
+          },
+          "ejemplares": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Número total de ejemplares",
+            "example": 2
+          },
+          "disponibles": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Ejemplares disponibles para préstamo",
+            "example": 2
+          },
+          "categoriaId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de la categoría a la que pertenece",
+            "example": 16
+          }
+        }
+      },
+      "CategoriaPeticionDto": {
+        "type": "object",
+        "description": "Datos para crear o modificar una categoría",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la categoría (obligatorio, máximo 50 caracteres, no se puede repetir)",
+            "example": "Teatro"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción de la categoría",
+            "example": "Categoría de obras de teatro"
+          }
+        }
+      },
+      "Categoria": {
+        "type": "object",
+        "description": "Categoría de libros",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identificador de la categoría",
+            "example": 16
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la categoría",
+            "example": "Literatura clásica"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción de la categoría",
+            "example": "Categoría de libros de literatura clásica"
+          }
+        }
+      },
+      "BibliotecaInfoDto": {
+        "type": "object",
+        "description": "Información general de la biblioteca",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la biblioteca",
+            "example": "Biblioteca Decroly"
+          },
+          "maxPrestamos": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Número máximo de préstamos permitidos",
+            "example": 3
+          },
+          "diasPrestamo": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Duración de un préstamo en días",
+            "example": 15
+          }
+        }
+      }
+    }
+  }
+}
